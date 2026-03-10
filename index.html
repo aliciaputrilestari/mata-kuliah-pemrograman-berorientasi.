@@ -3,271 +3,613 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Portfolio OOP Alicia</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>OOP Dart</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI';
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
 }
 
 body{
-min-height:100vh;
-background:linear-gradient(135deg,#ff9bd2,#7aa6ff,#ff9bd2);
-background-size:400% 400%;
-animation:bgMove 10s infinite alternate;
-color:white;
-}
-
-/* BACKGROUND ANIMATION */
-
-@keyframes bgMove{
-0%{background-position:left}
-100%{background-position:right}
+    background:linear-gradient(135deg,#ff4da6,#4da6ff);
+    color:white;
 }
 
 /* HEADER */
-
 header{
-text-align:center;
-padding:60px 20px;
+    text-align:center;
+    padding:40px 20px;
+    background:rgba(0,0,0,0.75);
 }
 
 header h1{
-font-size:42px;
-text-shadow:0 0 20px #ff6ec7;
-animation:glow 2s infinite alternate;
+    font-size:35px;
+    background:linear-gradient(45deg,#ff99dd,#66ccff);
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:goyang 3s infinite alternate;
 }
 
-@keyframes glow{
-from{text-shadow:0 0 10px #ff6ec7}
-to{text-shadow:0 0 30px #7aa6ff}
+@keyframes goyang{
+    from{transform:translateX(-4px);}
+    to{transform:translateX(4px);}
 }
 
-.profile{
-margin-top:20px;
-display:inline-block;
-padding:18px 30px;
-border-radius:25px;
-background:rgba(255,255,255,0.2);
-backdrop-filter:blur(10px);
-box-shadow:0 0 25px #ff9bd2;
+header p{
+    margin-top:10px;
+    font-weight:bold;
 }
 
-/* GRID */
-
+/* LAYOUT */
 .container{
-max-width:1100px;
-margin:auto;
-padding:20px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
+    display:flex;
+    width:95%;
+    margin:40px auto;
+    gap:30px;
 }
 
-/* CARD */
-
-.card{
-background:white;
-color:#333;
-padding:25px;
-border-radius:25px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
-transition:0.4s;
+/* CONTENT */
+.content{
+    flex:2;
 }
 
-.card:hover{
-transform:translateY(-10px) scale(1.05);
-box-shadow:0 0 35px #ff6ec7;
+.section{
+    background:rgba(0,0,0,0.8);
+    padding:25px;
+    margin-bottom:25px;
+    border-radius:15px;
+    box-shadow:0 0 20px #ff66cc;
+    transition:0.3s;
 }
 
-.card i{
-font-size:45px;
-margin-bottom:12px;
-color:#ff4fa3;
+.section:hover{
+    transform:scale(1.02);
+    box-shadow:0 0 25px #66ccff;
 }
 
-/* BUTTON */
-
-.btn{
-margin-top:15px;
-padding:12px 22px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-
-background:linear-gradient(45deg,#ff6ec7,#7aa6ff);
-color:white;
-font-weight:bold;
-
-box-shadow:0 0 15px #ff6ec7;
-transition:0.3s;
+.section h2{
+    margin-bottom:15px;
+    color:#66ccff;
 }
 
-.btn:hover{
-transform:scale(1.1);
-box-shadow:0 0 30px #7aa6ff;
+.code-box{
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #66ccff;
+    color:#00ffcc;
+    font-family:monospace;
+    overflow-x:auto;
+    margin-top:10px;
 }
 
-/* POPUP */
-
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.7);
-
-display:none;
-align-items:center;
-justify-content:center;
-z-index:999;
+/* Style untuk tombol DartPad */
+.dartpad-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff4da6, #4da6ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.popup-content{
-width:90%;
-height:80%;
-background:white;
-border-radius:20px;
-overflow:hidden;
-position:relative;
+.dartpad-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #66ccff;
+    background: linear-gradient(45deg, #4da6ff, #ff4da6);
 }
 
-.popup iframe{
-width:100%;
-height:100%;
-border:none;
+.dartpad-btn i {
+    margin-right: 8px;
 }
 
-.close{
-position:absolute;
-top:10px;
-right:15px;
-font-size:26px;
-cursor:pointer;
-color:red;
+/* COMMENT */
+.comment-box{
+    flex:1;
+    background:rgba(0,0,0,0.9);
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 25px #66ccff;
+    height:fit-content;
+    position:sticky;
+    top:20px;
 }
 
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:30px;
-margin-top:40px;
-font-size:15px;
+.comment-box h2{
+    text-align:center;
+    margin-bottom:15px;
+    color:#ff99dd;
 }
 
+input,textarea{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    padding:8px 12px;
+    border:none;
+    border-radius:6px;
+    background:linear-gradient(45deg,#ff4da6,#4da6ff);
+    color:white;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+.comment-item{
+    background:rgba(255,255,255,0.1);
+    padding:10px;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+.comment-item strong{
+    color:#66ccff;
+}
+
+/* Style untuk iframe modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    height: 90%;
+    margin: 2% auto;
+    background: #1e1e1e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.modal iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1001;
+    background: rgba(255,255,255,0.2);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.close-btn:hover {
+    background: rgba(255,255,255,0.4);
+    transform: scale(1.1);
+}
 </style>
 </head>
 
 <body>
 
 <header>
-
-<h1>🌸 Portfolio Tugas OOP 🌸</h1>
-
-<div class="profile">
-<b>Nama:</b> Alicia Putri Lestari <br>
-<b>NIM:</b> 251410011 <br>
-<b>Kelas:</b> SI2A
-</div>
-
+<h1>OOP DART - OBJECT ORIENTED PROGRAMMING</h1>
+<p>Alicia Putri Lestari | NIM: 251410011</p>
 </header>
 
 <div class="container">
 
-<div class="card">
-<i class="fa-solid fa-code"></i>
-<h3>Constructor</h3>
-<p>Contoh constructor pada Dart.</p>
-<button class="btn" onclick="openCode()">Run Code</button>
+<div class="content">
+
+<!-- 01 - Pengertian OOP (Tidak ada link DartPad) -->
+<div class="section">
+<h2>01 - Pengertian OOP</h2>
+<p>OOP (Object Oriented Programming) adalah paradigma atau konsep pemrograman yang berorientasi pada objek,
+di mana program dibuat berdasarkan model objek yang memiliki data (atribut) dan perilaku (method/fungsi).</p>
 </div>
 
-<div class="card">
-<i class="fa-solid fa-bolt"></i>
-<h3>Named Constructor</h3>
-<p>Constructor dengan nama khusus.</p>
-<button class="btn" onclick="openCode()">Run Code</button>
+<!-- 02 - KONSEP DASAR (Tidak ada link DartPad) -->
+<div class="section">
+<h2>02 - KONSEP DASAR</h2>
+<p>Class (Kelas) → Cetakan atau blueprint untuk membuat objek.</p>
+<p>Object (Objek) → Hasil dari class (wujud nyata dari kelas).</p>
+<p>Attribute (Atribut) → Data atau sifat yang dimiliki objek.</p>
+<p>Method → Fungsi atau perilaku yang dapat dilakukan objek..</p>
 </div>
 
-<div class="card">
-<i class="fa-solid fa-gem"></i>
-<h3>Constant Constructor</h3>
-<p>Objek immutable di Dart.</p>
-<button class="btn" onclick="openCode()">Run Code</button>
+<!-- 03 - CONTOH CLASS SEDERHANA (CAR) - Link 1 -->
+<div class="section" id="section1">
+<h2>03 - CONTOH CLASS SEDERHANA (CAR)</h2> 
+<p>Di bawah ini adalah contoh pendefinisian class Car. Class ini memiliki dua attribute
+(model dan color) serta dua method (start dan stop) yang merepresentasikan perilaku dasar sebuah mobil.</p>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : Si2A
+
+class Car {
+  String? model;
+  String? color;
+  void start() {
+    print('Car started!');
+  }
+  void stop() {
+    print('Car stopped!');
+  }
+}
+void main() {
+  Car myCar = Car();
+  
+  myCar.model = "Brio";
+  myCar.color = "Pink";
+  myCar.start();
+  myCar.stop();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('392fbd088e8e62d6eead7cbe5acce5ef')">
+    <i>▶</i> Jalankan Kode di DartPad
+</button>
 </div>
 
-<div class="card">
-<i class="fa-solid fa-diagram-project"></i>
-<h3>Initializer List</h3>
-<p>Inisialisasi nilai sebelum constructor.</p>
-<button class="btn" onclick="openCode()">Run Code</button>
+<!-- 04 - OBJECT INSTANTIATION - Link 2 -->
+<div class="section" id="section2">
+<h2>04 - OBJECT INSTANTIATION</h2>
+<p>Setelah class didefinisikan, kita dapat membuat object atau instance dari
+class tersebut di dalam fungsi main(). Proses ini disebut instansiasi, di mana
+objek dialokasikan ke dalam memori.</p>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : Si2A
+
+class Car {
+  String? model; 
+  String? color; 
+}
+
+void main() {
+  Car myCar = Car();
+  
+  myCar.model = "Brio"; 
+  myCar.color = "Pink";
+
+  print(myCar.model); 
+  print(myCar.color);
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('d5e3d5afab4abf3afa218c68e32280ac')">
+    <i>▶</i> Jalankan Kode di DartPad
+</button>
 </div>
 
-<div class="card">
-<i class="fa-solid fa-lock"></i>
-<h3>Getter</h3>
-<p>Mengambil data private.</p>
-<button class="btn" onclick="openCode()">Run Code</button>
+<!-- 05 - CONSTRUCTORS - Link 3 -->
+<div class="section" id="section3">
+<h2>05 - CONSTRUCTORS</h2>
+<p>Constructor adalah metode inisialisasi yang dipanggil secara otomatis saat objek baru
+diciptakan dalam memori sistem. Di Dart, kita bisa menggunakan formal parameters
+(this.attribute) untuk menyederhanakan proses pengisian nilai attribute.</p>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : Si2A
+
+class Car {
+  String model; 
+  String color;
+
+  Car(this.model, this.color);
+
+  void start() {
+    print('Engine Online: $model'); 
+  }
+}
+
+void main() {
+  Car myCar = Car("Brio", "Pink");
+
+  myCar.start(); 
+  print(myCar.color); 
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('c82afad3c4e27824026b0a028b98ad73')">
+    <i>▶</i> Jalankan Kode di DartPad
+</button>
 </div>
 
-<div class="card">
-<i class="fa-solid fa-key"></i>
-<h3>Setter</h3>
-<p>Mengubah data private.</p>
-<button class="btn" onclick="openCode()">Run Code</button>
+<!-- 06 - PRACTICE: MAHASISWA CLASS - Link 4 -->
+<div class="section" id="section4">
+<h2>06 - PRACTICE: MAHASISWA CLASS</h2>
+<P>Latihan mandiri dalam membuat class Mahasiswa yang menampung 
+data akademik. Class ini mengimplementasikan constructor untuk 
+memastikan setiap objek mahasiswa memiliki data yang lengkap saat dibuat.</P>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : Si2A
+
+class Mahasiswa {
+  String nama; 
+  String nim; 
+  double ipk;  
+
+  Mahasiswa(this.nama, this.nim, this.ipk);
+
+  void tampilkanData() {
+    print('Nama : $nama');
+    print('NIM  : $nim');
+    print('IPK  : $ipk');
+  }
+}
+
+void main() {
+  Mahasiswa mhs1 = Mahasiswa("Alicia Putri Lestari", "251410011", 3.80);
+  
+  mhs1.tampilkanData();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('329dafead983066838fec8b9c49d3631')">
+    <i>▶</i> Jalankan Kode di DartPad
+</button>
 </div>
 
-<div class="card">
-<i class="fa-solid fa-shield"></i>
-<h3>Encapsulation</h3>
-<p>Melindungi data dalam class.</p>
-<button class="btn" onclick="openCode()">Run Code</button>
+<!-- 07 - ENCAPSULATION - Link 5 -->
+<div class="section" id="section5">
+<h2>07 - ENCAPSULATION</h2>
+<p>Encapsulation adalah teknik untuk menyembunyikan detail implementasi internal.
+Di Dart, kita menggunakan awalan underscore (_) untuk membuat attribute bersifat
+private, sehingga hanya bisa diakses melalui getter dan setter.</p>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Leestari
+// Nim    : 251410011
+// Kelas  : Si2A
+
+class Person {
+  String _name; 
+  int age;    
+
+  Person(this._name, this.age);
+
+  void setName(String name) => _name = name;
+  
+  String getName() => _name;
+}
+
+void main() {
+  Person person = Person("Alicia Putri Lestari", 18);
+
+  print(person.age); 
+  person.setName("Alicia Putri Lestari");
+  print(person.getName()); 
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('d56ef6ff64b0934659d890690ca517eb')">
+    <i>▶</i> Jalankan Kode di DartPad
+</button>
 </div>
 
-<div class="card">
-<i class="fa-solid fa-user-lock"></i>
-<h3>Sistem Login</h3>
-<p>Contoh login sederhana.</p>
-<button class="btn" onclick="openCode()">Run Code</button>
+<!-- 08 - THIS KEYWORD - Link 6 -->
+<div class="section" id="section6">
+<h2>08 - THIS KEYWORD</h2>
+<p>Kata Kunci this digunakan untuk merujuk pada instance saat ini dari sebuah
+class. Ini sangat berguna untuk menghindari ambiguitas ketika nama parameter para
+constructor sama dengan nama attribute di dalam class.</p>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : Si2A
+
+class Product {
+  String nama; 
+  Product(this.nama);
+}
+
+void main() {
+  Product produk1 = Product("Laptop Ultrabook");
+  print(produk1.nama); 
+}
+<pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('bf3f4589ab9ca9b7af456a8c605103b7')">
+    <i>▶</i> Jalankan Kode di DartPad
+</button>
+</div>
+
+<!-- 09 - CONSTRUCTOR WITH PARAMETERS - Link 7 -->
+<div class="section" id="section7">
+<h2>09 - PRACTICE 2: PRODUK CLASS</h2>
+<p>Latihan lanjutan menggunakan Named Parameters dan operator required. Teknik ini membuat pembuatan
+objek menjadi lebih deskriptif dan aman karena compiler akan memberikan peringatan jika data 
+wajib tidak diisi.</p>
+<div class="code-box">
+<pre>
+//Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : Si2A
+
+class Produk {
+  final String id, nama; 
+  final double harga; 
+  final int stok;   
+  final String kategori;
+
+  Produk({
+    required this.id,
+    required this.nama,
+    required this.harga,
+    this.stok = 0,
+    this.kategori = 'Umum',
+  });
+}
+
+void main() {
+  Produk laptop = Produk(
+    id: "P001",
+    nama: "Laptop Ulrabook",
+    harga: 15000000,
+    stok: 15,
+    kategori: "Elektronik",
+  );
+
+  Produk smartphone = Produk(
+    id: "P002",
+    nama: "Smartphone Gaming",
+    harga: 12000000,
+    stok: 25,
+  );
+
+  Produk kamera = Produk(
+    id: "P003",
+    nama: "Kamera Action",
+    harga: 20000000,
+  );
+
+  print(laptop.nama); 
+  print(smartphone.nama); 
+  print(kamera.nama); 
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('2667dfd4e515efbdb05fa76ada2fb11d')">
+    <i>▶</i> Jalankan Kode di DartPad
+</button>
+</div>
+
+<!-- 10 - Kesimpulan (Tidak ada link DartPad) -->
+<div class="section">
+<h2>10- Kesimpulan</h2>
+<p>1. OOP (Object Oriented Programming)
+OOP adalah konsep pemrograman yang menggunakan objek dan kelas untuk mengatur kode agar lebih terstruktur, mudah dipahami, dan mudah digunakan kembali.</p>
+<p>2. Constructor
+Constructor adalah method khusus dalam class yang otomatis dijalankan saat objek dibuat, biasanya digunakan untuk menginisialisasi nilai awal atribut.</p>
+<p>3. Encapsulation
+Encapsulation adalah konsep menyembunyikan data dalam class dan hanya bisa diakses melalui method tertentu, sehingga data lebih aman dan terkontrol.</p>
+</div>
+
+<!-- 11 - Class Hewan (Tidak ada link DartPad) -->
+<div class="section">
+<h2>11 - QUIZ BONUS: HEWAN CLASS</h2>
+<p>Implementasi Kelas Hewan sesuai instruksi diskusi untuk pendefinisian atribut dan metode dasar.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicisa Putri Lestari
+// Nim   : 251410011
+// Kelas : Si2a
+
+class Hewan {
+  String nama;
+  Hewan(this.nama);
+  void bersuara() {
+    print('$nama sedang bersuara...');
+  }
+}
+void main() {
+  var myPet = Hewan('Harimau');
+  print('Nama Hewan: ${myPet.nama}');
+  myPet.bersuara();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('6ff91f5e01393cf4c8862aad1c2a383e')">
+    <i>▶</i> Jalankan Kode di DartPad
+</button>
+</div>
 </div>
 
 </div>
 
-<div class="popup" id="popup">
-
-<div class="popup-content">
-
-<span class="close" onclick="closeCode()">✖</span>
-
-<iframe src="https://dartpad.dev/embed-inline.html?id=example&run=true&split=60"></iframe>
-
+<!-- MODAL UNTUK DARTPAD -->
+<div id="dartpadModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeDartPad()">&times;</span>
+        <iframe id="dartpadIframe" src="" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+    </div>
 </div>
-
-</div>
-
-<footer>
-✨ Website Tugas OOP - Alicia Putri Lestari ✨
-</footer>
 
 <script>
+    // SECURITY PROTOCOL: ANTI-VANDALISM & ANTI-VIEWSOURCE
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.onkeydown = function (e) {
+      if (e.keyCode == 123) return false; // F12
+      if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // Ctrl+Shift+I/J/C
+      if (e.ctrlKey && e.keyCode == 85) return false; // Ctrl+U
+      if (e.ctrlKey && e.keyCode == 83) return false; // Ctrl+S
+    };
+    document.onselectstart = function () { return false; };
 
-function openCode(){
-document.getElementById("popup").style.display="flex";
-}
+    // Fungsi untuk membuka DartPad di modal
+    function openDartPad(id) {
+        const modal = document.getElementById('dartpadModal');
+        const iframe = document.getElementById('dartpadIframe');
+        
+        // Hapus trailing slash jika ada
+        id = id.replace(/\/$/, '');
+        
+        // Set src iframe dengan ID yang benar
+        iframe.src = `https://dartpad.dev/embed-inline.html?id=${id}&theme=dark&run=true`;
+        
+        // Tampilkan modal
+        modal.style.display = 'block';
+        
+        // Cegah scroll di background
+        document.body.style.overflow = 'hidden';
+    }
 
-function closeCode(){
-document.getElementById("popup").style.display="none";
-}
+    // Fungsi untuk menutup modal
+    function closeDartPad() {
+        const modal = document.getElementById('dartpadModal');
+        const iframe = document.getElementById('dartpadIframe');
+        
+        // Sembunyikan modal
+        modal.style.display = 'none';
+        
+        // Hentikan iframe dengan mengosongkan src
+        iframe.src = '';
+        
+        // Kembalikan scroll
+        document.body.style.overflow = 'auto';
+    }
 
+    // Tutup modal jika klik di luar konten modal
+    window.onclick = function(event) {
+        const modal = document.getElementById('dartpadModal');
+        if (event.target == modal) {
+            closeDartPad();
+        }
+    }
+
+   
 </script>
 
 </body>
