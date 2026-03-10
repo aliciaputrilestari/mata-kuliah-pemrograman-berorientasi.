@@ -250,7 +250,7 @@ void main() {
 }
 </pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('392fbd088e8e62d6eead7cbe5acce5ef')">
+<button class="dartpad-btn" onclick="openDartPad('cb66308b4b810525aee86299afa1019c')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -286,7 +286,7 @@ void main() {
 }
 </pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('d5e3d5afab4abf3afa218c68e32280ac')">
+<button class="dartpad-btn" onclick="openDartPad('244d85bd62ae0d6573003609f393a3d3')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -316,7 +316,7 @@ void main() {
 }
 </pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('c82afad3c4e27824026b0a028b98ad73')">
+<button class="dartpad-btn" onclick="openDartPad('f30888c40c8bca3ec8fbb2f452262beb')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -398,15 +398,23 @@ Biasanya setter digunakan untuk melakukan validasi data sebelum nilai tersebut d
 // Kelas : SI2A
 
 class Film {
-  String _judul;
+  String _judul = "";
 
-  Film(this._judul);
+  set judul(String value) {
+    if (value.length >= 3) {
+      _judul = value;
+    } else {
+      print("Judul terlalu pendek");
+    }
+  }
 
   String get judul => _judul;
 }
 
 void main() {
-  var film1 = Film("Avengers");
+  var film1 = Film();
+
+  film1.judul = "Up";
 
   print("Judul Film: ${film1.judul}");
 }
