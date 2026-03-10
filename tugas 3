@@ -1,1 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tugas OOP Sesi 3</title>
 
+<style>
+body{
+font-family: Arial, sans-serif;
+background:#f4f6fb;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+color:#2c3e50;
+}
+
+.card{
+background:white;
+padding:20px;
+margin-top:20px;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+pre{
+background:#1e1e1e;
+color:#00ff9c;
+padding:15px;
+border-radius:8px;
+overflow:auto;
+}
+
+.info{
+background:#e8f0fe;
+padding:10px;
+border-radius:8px;
+margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Tugas OOP Sesi 3</h1>
+
+<div class="info">
+Nama: Alicia Putri Lestari <br>
+NIM: 251410011 <br>
+Kelas: SI2A
+</div>
+
+<div class="card">
+<h2>1. Constructor – Class Hewan</h2>
+<pre>
+class Hewan {
+  String nama;
+  String jenis;
+
+  Hewan(this.nama, this.jenis);
+}
+
+void main() {
+  var hewan1 = Hewan("Kucing", "Mamalia");
+
+  print("Nama Hewan: ${hewan1.nama}");
+  print("Jenis: ${hewan1.jenis}");
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>2. Named Constructor – Class Sepeda</h2>
+<pre>
+class Sepeda {
+  String? merk;
+  int? gear;
+
+  Sepeda(this.merk, this.gear);
+
+  Sepeda.standard() {
+    merk = "Polygon";
+    gear = 21;
+  }
+}
+
+void main() {
+  var sepeda1 = Sepeda.standard();
+
+  print(sepeda1.merk);
+  print(sepeda1.gear);
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>3. Constant Constructor</h2>
+<pre>
+class Ukuran {
+  final int panjang;
+  final int lebar;
+
+  const Ukuran(this.panjang, this.lebar);
+}
+
+void main() {
+  const meja = Ukuran(120,60);
+
+  print("${meja.panjang} x ${meja.lebar}");
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>4. Initializer List</h2>
+<pre>
+class Segitiga {
+  double alas;
+  double tinggi;
+  double luas;
+
+  Segitiga(this.alas, this.tinggi)
+  : luas = 0.5 * alas * tinggi;
+}
+
+void main() {
+  var s = Segitiga(8,6);
+
+  print(s.luas);
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>5. Getter</h2>
+<pre>
+class Film {
+  String _judul;
+
+  Film(this._judul);
+
+  String get judul => _judul;
+}
+
+void main() {
+  var film = Film("Avengers");
+
+  print(film.judul);
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>6. Setter</h2>
+<pre>
+class Film {
+  String _judul = "";
+
+  set judul(String value){
+    if(value.length >=3){
+      _judul = value;
+    }
+  }
+
+  String get judul => _judul;
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>7. Enkapsulasi – Class Rekening</h2>
+<pre>
+class Rekening {
+  String _namaPemilik = "";
+  double _saldo = 0;
+
+  String get namaPemilik => _namaPemilik;
+  double get saldo => _saldo;
+
+  set namaPemilik(String value){
+    _namaPemilik = value;
+  }
+
+  void tambahSaldo(double jumlah){
+    if(jumlah > 0){
+      _saldo += jumlah;
+    }
+  }
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>8. Sistem Login Sederhana</h2>
+<pre>
+class SistemLogin {
+  String _username = "user1";
+  String _password = "12345678";
+
+  bool cekLogin(String user, String pass){
+    return user == _username && pass == _password;
+  }
+}
+</pre>
+</div>
+
+</div>
+
+</body>
+</html>
