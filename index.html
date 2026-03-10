@@ -225,8 +225,10 @@ button{
 <!-- 01 - DEFAULT CONSTRUCTOR (CLASS HEWAN) - Link 1 -->
 <div class="section" id="section1">
 <h2>01 - DEFAULT CONSTRUCTOR (CLASS HEWAN)</h2> 
-<p>Di bawah ini adalah contoh pendefinisian class Car. Class ini memiliki dua attribute
-(model dan color) serta dua method (start dan stop) yang merepresentasikan perilaku dasar sebuah mobil.</p>
+<p>Constructor adalah fungsi khusus di dalam class yang digunakan untuk memberikan nilai awal pada objek
+saat objek dibuat. Constructor akan otomatis dipanggil ketika kita membuat objek dari class tersebut.
+Dengan constructor, kita bisa langsung mengisi nilai atribut tanpa harus mengubahnya secara manual setelah objek dibuat.
+</p>
 <div class="code-box">
 <pre>
 // Nama  : Alicia Putri Lestari
@@ -256,9 +258,8 @@ void main() {
 <!-- 02 - NAMED CONSTRUCTOR (CLASS SEPEDA) - Link 2 -->
 <div class="section" id="section2">
 <h2>02 - NAMED CONSTRUCTOR (CLASS SEPEDA)</h2>
-<p>Setelah class didefinisikan, kita dapat membuat object atau instance dari
-class tersebut di dalam fungsi main(). Proses ini disebut instansiasi, di mana
-objek dialokasikan ke dalam memori.</p>
+<p>Named constructor adalah constructor yang memiliki nama tambahan sehingga satu class dapat memiliki lebih dari satu constructor.
+Hal ini berguna ketika kita ingin membuat objek dengan cara yang berbeda atau dengan nilai awal yang berbeda.</p>
 <div class="code-box">
 <pre>
 // Nama  : Alicia Putri Lestari
@@ -293,9 +294,8 @@ void main() {
 <!-- 03 - CONSTANT CONSTUCTOR (CLASS UKURAN) - Link 3 -->
 <div class="section" id="section3">
 <h2>03 - CONSTANT CONSTRUCTOR (CLASS UKURAN)</h2>
-<p>Constructor adalah metode inisialisasi yang dipanggil secara otomatis saat objek baru
-diciptakan dalam memori sistem. Di Dart, kita bisa menggunakan formal parameters
-(this.attribute) untuk menyederhanakan proses pengisian nilai attribute.</p>
+<p>Constant constructor digunakan untuk membuat objek yang nilainya tidak dapat diubah (immutable).
+Constructor ini biasanya digunakan pada class yang memiliki atribut final sehingga nilainya tetap setelah objek dibuat.</p>
 <div class="code-box">
 <pre>
 // Nama  : Alicia Putri Lestari
@@ -324,9 +324,9 @@ void main() {
 <!-- 04 - INITIALIZER LIST (CLASS SEGITIGA) - Link 4 -->
 <div class="section" id="section4">
 <h2>04 - INITIALIZER LIST (CLASS SEGITIGA)</h2>
-<P>Latihan mandiri dalam membuat class Mahasiswa yang menampung 
-data akademik. Class ini mengimplementasikan constructor untuk 
-memastikan setiap objek mahasiswa memiliki data yang lengkap saat dibuat.</P>
+<P>Initializer list adalah cara untuk menginisialisasi nilai variabel sebelum constructor dijalankan.
+Biasanya digunakan ketika variabel bersifat final atau ketika kita ingin melakukan proses tertentu sebelum constructor selesai.
+</P>
 <div class="code-box">
 <pre>
 // Nama  : Alicia Putri Lestari
@@ -349,7 +349,7 @@ void main() {
 }
 </pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('329dafead983066838fec8b9c49d3631')">
+<button class="dartpad-btn" onclick="openDartPad('d89857425adcf3dbb24a71370a0c8c25')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -357,9 +357,8 @@ void main() {
 <!-- 05 - GETTER (CLASS FILM) - Link 5 -->
 <div class="section" id="section5">
 <h2>05 - GETTER (CLASS FILM)</h2>
-<p>Encapsulation adalah teknik untuk menyembunyikan detail implementasi internal.
-Di Dart, kita menggunakan awalan underscore (_) untuk membuat attribute bersifat
-private, sehingga hanya bisa diakses melalui getter dan setter.</p>
+<p>Getter adalah metode yang digunakan untuk mengambil atau membaca nilai dari variabel private.
+Dengan getter, data dalam class tetap terlindungi tetapi masih bisa diakses secara aman dari luar class.</p>
 <div class="code-box">
 <pre>
 // Nama  : Alicia Putri Lestari
@@ -381,7 +380,7 @@ void main() {
 }
 </pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('d56ef6ff64b0934659d890690ca517eb')">
+<button class="dartpad-btn" onclick="openDartPad('accbc5a4cc0be0cae306ffdd3bbfd6db')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -389,9 +388,9 @@ void main() {
 <!-- 06 - SETTER (CALSS FILM) - Link 6 -->
 <div class="section" id="section6">
 <h2>06 - SETTER (CLASS FILM)</h2>
-<p>Kata Kunci this digunakan untuk merujuk pada instance saat ini dari sebuah
-class. Ini sangat berguna untuk menghindari ambiguitas ketika nama parameter para
-constructor sama dengan nama attribute di dalam class.</p>
+<p>Setter adalah metode yang digunakan untuk mengubah nilai variabel private dengan aturan tertentu.
+Biasanya setter digunakan untuk melakukan validasi data sebelum nilai tersebut disimpan ke dalam variabel.
+</p>
 <div class="code-box">
 <pre>
 // Nama  : Alicia Putri Lestari
@@ -413,7 +412,7 @@ void main() {
 }
 <pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('bf3f4589ab9ca9b7af456a8c605103b7')">
+<button class="dartpad-btn" onclick="openDartPad('1c9dd22fdaec29a398e6d1d6754b5eeb')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -421,9 +420,10 @@ void main() {
 <!-- 07 - ENKAPSULASI CLASS REKENING - Link 7 -->
 <div class="section" id="section7">
 <h2>07 - ENKAPSULASI CLASS REKENING</h2>
-<p>Latihan lanjutan menggunakan Named Parameters dan operator required. Teknik ini membuat pembuatan
-objek menjadi lebih deskriptif dan aman karena compiler akan memberikan peringatan jika data 
-wajib tidak diisi.</p>
+<p>Encapsulation adalah konsep dalam Object Oriented Programming (OOP) yang digunakan untuk melindungi
+data dalam class agar tidak bisa diakses langsung dari luar.
+Data biasanya dibuat private dan hanya dapat diakses melalui getter dan setter.
+</p>
 <div class="code-box">
 <pre>
 // Nama  : Alicia Putri Lestari
@@ -459,7 +459,7 @@ void main() {
 }
 </pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('2667dfd4e515efbdb05fa76ada2fb11d')">
+<button class="dartpad-btn" onclick="openDartPad('cf99be8ce749ef1006ffcaadc2416f97')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -467,7 +467,10 @@ void main() {
 <!-- 08 - SISTEM LOGIN VERSI LAIN - Link 8 -->
 <div class="section" id="section8">
 <h2>08 - SISTEM LOGIN VERSI LAIN</h2>
-<p>Implementasi Kelas Hewan sesuai instruksi diskusi untuk pendefinisian atribut dan metode dasar.</p>
+<p>Contoh ini menunjukkan bagaimana konsep enkapsulasi digunakan dalam sistem login.
+Username dan password disimpan dalam class, kemudian proses login dilakukan dengan cara membandingkan
+data yang dimasukkan pengguna dengan data yang ada di dalam class.
+</p>
 <div class="code-box">
 <pre>
 // Nama  : Alicia Putri Lestari
@@ -494,9 +497,18 @@ void main() {
 }
 </pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('6ff91f5e01393cf4c8862aad1c2a383e')">
+<button class="dartpad-btn" onclick="openDartPad('83deca2b99243c69b51e7bc52e8d6cba')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
+</div>
+
+<!-- 09 - Kesimpulan (Tidak ada link DartPad) -->
+<div class="section">
+<h2>09- Kesimpulan</h2>
+<p>Constructor dan enkapsulasi merupakan bagian penting dalam pemrograman berorientasi objek.
+Constructor digunakan untuk membuat objek dan memberikan nilai awal, sedangkan enkapsulasi
+digunakan untuk melindungi data dalam class agar lebih aman dan terstruktur.
+</p>
 </div>
 </div>
 
