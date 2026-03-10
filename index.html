@@ -222,50 +222,29 @@ button{
 
 <div class="content">
 
-<!-- 01 - Pengertian OOP (Tidak ada link DartPad) -->
-<div class="section">
-<h2>01 - Pengertian OOP</h2>
-<p>OOP (Object Oriented Programming) adalah paradigma atau konsep pemrograman yang berorientasi pada objek,
-di mana program dibuat berdasarkan model objek yang memiliki data (atribut) dan perilaku (method/fungsi).</p>
-</div>
-
-<!-- 02 - KONSEP DASAR (Tidak ada link DartPad) -->
-<div class="section">
-<h2>02 - KONSEP DASAR</h2>
-<p>Class (Kelas) → Cetakan atau blueprint untuk membuat objek.</p>
-<p>Object (Objek) → Hasil dari class (wujud nyata dari kelas).</p>
-<p>Attribute (Atribut) → Data atau sifat yang dimiliki objek.</p>
-<p>Method → Fungsi atau perilaku yang dapat dilakukan objek..</p>
-</div>
-
-<!-- 03 - CONTOH CLASS SEDERHANA (CAR) - Link 1 -->
+<!-- 01 - DEFAULT CONSTRUCTOR (CLASS HEWAN) - Link 1 -->
 <div class="section" id="section1">
-<h2>03 - CONTOH CLASS SEDERHANA (CAR)</h2> 
+<h2>01 - DEFAULT CONSTRUCTOR (CLASS HEWAN)</h2> 
 <p>Di bawah ini adalah contoh pendefinisian class Car. Class ini memiliki dua attribute
 (model dan color) serta dua method (start dan stop) yang merepresentasikan perilaku dasar sebuah mobil.</p>
 <div class="code-box">
 <pre>
-// Nama   : Alicia Putri Lestari
-// Nim    : 251410011
-// Kelas  : Si2A
+// Nama  : Alicia Putri Lestari
+// NIM   : 251410011
+// Kelas : SI2A
 
-class Car {
-  String? model;
-  String? color;
-  void start() {
-    print('Car started!');
-  }
-  void stop() {
-    print('Car stopped!');
-  }
+class Hewan {
+  String nama;
+  String jenis;
+
+  Hewan(this.nama, this.jenis);
 }
+
 void main() {
-  Car myCar = Car();
-  
-  myCar.model = "Brio";
-  myCar.color = "Pink";
-  myCar.start();
-  myCar.stop();
+  var hewan1 = Hewan("Kucing", "Mamalia");
+
+  print("Nama Hewan: ${hewan1.nama}");
+  print("Jenis: ${hewan1.jenis}");
 }
 </pre>
 </div>
@@ -274,31 +253,35 @@ void main() {
 </button>
 </div>
 
-<!-- 04 - OBJECT INSTANTIATION - Link 2 -->
+<!-- 02 - NAMED CONSTRUCTOR (CLASS SEPEDA) - Link 2 -->
 <div class="section" id="section2">
-<h2>04 - OBJECT INSTANTIATION</h2>
+<h2>02 - NAMED CONSTRUCTOR (CLASS SEPEDA)</h2>
 <p>Setelah class didefinisikan, kita dapat membuat object atau instance dari
 class tersebut di dalam fungsi main(). Proses ini disebut instansiasi, di mana
 objek dialokasikan ke dalam memori.</p>
 <div class="code-box">
 <pre>
-// Nama   : Alicia Putri Lestari
-// Nim    : 251410011
-// Kelas  : Si2A
+// Nama  : Alicia Putri Lestari
+// NIM   : 251410011
+// Kelas : SI2A
 
-class Car {
-  String? model; 
-  String? color; 
+class Sepeda {
+  String? merk;
+  int? gear;
+
+  Sepeda(this.merk, this.gear);
+
+  Sepeda.standard() {
+    merk = "Polygon";
+    gear = 21;
+  }
 }
 
 void main() {
-  Car myCar = Car();
-  
-  myCar.model = "Brio"; 
-  myCar.color = "Pink";
+  var sepeda1 = Sepeda.standard();
 
-  print(myCar.model); 
-  print(myCar.color);
+  print("Merk Sepeda: ${sepeda1.merk}");
+  print("Jumlah Gear: ${sepeda1.gear}");
 }
 </pre>
 </div>
@@ -307,34 +290,29 @@ void main() {
 </button>
 </div>
 
-<!-- 05 - CONSTRUCTORS - Link 3 -->
+<!-- 03 - CONSTANT CONSTUCTOR (CLASS UKURAN) - Link 3 -->
 <div class="section" id="section3">
-<h2>05 - CONSTRUCTORS</h2>
+<h2>03 - CONSTANT CONSTRUCTOR (CLASS UKURAN)</h2>
 <p>Constructor adalah metode inisialisasi yang dipanggil secara otomatis saat objek baru
 diciptakan dalam memori sistem. Di Dart, kita bisa menggunakan formal parameters
 (this.attribute) untuk menyederhanakan proses pengisian nilai attribute.</p>
 <div class="code-box">
 <pre>
-// Nama   : Alicia Putri Lestari
-// Nim    : 251410011
-// Kelas  : Si2A
+// Nama  : Alicia Putri Lestari
+// NIM   : 251410011
+// Kelas : SI2A
 
-class Car {
-  String model; 
-  String color;
+class Ukuran {
+  final int panjang;
+  final int lebar;
 
-  Car(this.model, this.color);
-
-  void start() {
-    print('Engine Online: $model'); 
-  }
+  const Ukuran(this.panjang, this.lebar);
 }
 
 void main() {
-  Car myCar = Car("Brio", "Pink");
+  const ukuranMeja = Ukuran(120, 60);
 
-  myCar.start(); 
-  print(myCar.color); 
+  print("Ukuran: ${ukuranMeja.panjang} x ${ukuranMeja.lebar}");
 }
 </pre>
 </div>
@@ -343,36 +321,31 @@ void main() {
 </button>
 </div>
 
-<!-- 06 - PRACTICE: MAHASISWA CLASS - Link 4 -->
+<!-- 04 - INITIALIZER LIST (CLASS SEGITIGA) - Link 4 -->
 <div class="section" id="section4">
-<h2>06 - PRACTICE: MAHASISWA CLASS</h2>
+<h2>04 - INITIALIZER LIST (CLASS SEGITIGA)</h2>
 <P>Latihan mandiri dalam membuat class Mahasiswa yang menampung 
 data akademik. Class ini mengimplementasikan constructor untuk 
 memastikan setiap objek mahasiswa memiliki data yang lengkap saat dibuat.</P>
 <div class="code-box">
 <pre>
-// Nama   : Alicia Putri Lestari
-// Nim    : 251410011
-// Kelas  : Si2A
+// Nama  : Alicia Putri Lestari
+// NIM   : 251410011
+// Kelas : SI2A
 
-class Mahasiswa {
-  String nama; 
-  String nim; 
-  double ipk;  
+class Segitiga {
+  double alas;
+  double tinggi;
+  double luas;
 
-  Mahasiswa(this.nama, this.nim, this.ipk);
-
-  void tampilkanData() {
-    print('Nama : $nama');
-    print('NIM  : $nim');
-    print('IPK  : $ipk');
-  }
+  Segitiga(this.alas, this.tinggi)
+      : luas = 0.5 * alas * tinggi;
 }
 
 void main() {
-  Mahasiswa mhs1 = Mahasiswa("Alicia Putri Lestari", "251410011", 3.80);
-  
-  mhs1.tampilkanData();
+  var segitiga1 = Segitiga(8, 6);
+
+  print("Luas Segitiga: ${segitiga1.luas}");
 }
 </pre>
 </div>
@@ -381,35 +354,30 @@ void main() {
 </button>
 </div>
 
-<!-- 07 - ENCAPSULATION - Link 5 -->
+<!-- 05 - GETTER (CLASS FILM) - Link 5 -->
 <div class="section" id="section5">
-<h2>07 - ENCAPSULATION</h2>
+<h2>05 - GETTER (CLASS FILM)</h2>
 <p>Encapsulation adalah teknik untuk menyembunyikan detail implementasi internal.
 Di Dart, kita menggunakan awalan underscore (_) untuk membuat attribute bersifat
 private, sehingga hanya bisa diakses melalui getter dan setter.</p>
 <div class="code-box">
 <pre>
-// Nama   : Alicia Putri Leestari
-// Nim    : 251410011
-// Kelas  : Si2A
+// Nama  : Alicia Putri Lestari
+// NIM   : 251410011
+// Kelas : SI2A
 
-class Person {
-  String _name; 
-  int age;    
+class Film {
+  String _judul;
 
-  Person(this._name, this.age);
+  Film(this._judul);
 
-  void setName(String name) => _name = name;
-  
-  String getName() => _name;
+  String get judul => _judul;
 }
 
 void main() {
-  Person person = Person("Alicia Putri Lestari", 18);
+  var film1 = Film("Avengers");
 
-  print(person.age); 
-  person.setName("Alicia Putri Lestari");
-  print(person.getName()); 
+  print("Judul Film: ${film1.judul}");
 }
 </pre>
 </div>
@@ -418,26 +386,30 @@ void main() {
 </button>
 </div>
 
-<!-- 08 - THIS KEYWORD - Link 6 -->
+<!-- 06 - SETTER (CALSS FILM) - Link 6 -->
 <div class="section" id="section6">
-<h2>08 - THIS KEYWORD</h2>
+<h2>06 - SETTER (CLASS FILM)</h2>
 <p>Kata Kunci this digunakan untuk merujuk pada instance saat ini dari sebuah
 class. Ini sangat berguna untuk menghindari ambiguitas ketika nama parameter para
 constructor sama dengan nama attribute di dalam class.</p>
 <div class="code-box">
 <pre>
-// Nama   : Alicia Putri Lestari
-// Nim    : 251410011
-// Kelas  : Si2A
+// Nama  : Alicia Putri Lestari
+// NIM   : 251410011
+// Kelas : SI2A
 
-class Product {
-  String nama; 
-  Product(this.nama);
+class Film {
+  String _judul;
+
+  Film(this._judul);
+
+  String get judul => _judul;
 }
 
 void main() {
-  Product produk1 = Product("Laptop Ultrabook");
-  print(produk1.nama); 
+  var film1 = Film("Avengers");
+
+  print("Judul Film: ${film1.judul}");
 }
 <pre>
 </div>
@@ -446,58 +418,44 @@ void main() {
 </button>
 </div>
 
-<!-- 09 - CONSTRUCTOR WITH PARAMETERS - Link 7 -->
+<!-- 07 - ENKAPSULASI CLASS REKENING - Link 7 -->
 <div class="section" id="section7">
-<h2>09 - PRACTICE 2: PRODUK CLASS</h2>
+<h2>07 - ENKAPSULASI CLASS REKENING</h2>
 <p>Latihan lanjutan menggunakan Named Parameters dan operator required. Teknik ini membuat pembuatan
 objek menjadi lebih deskriptif dan aman karena compiler akan memberikan peringatan jika data 
 wajib tidak diisi.</p>
 <div class="code-box">
 <pre>
-//Nama   : Alicia Putri Lestari
-// Nim    : 251410011
-// Kelas  : Si2A
+// Nama  : Alicia Putri Lestari
+// NIM   : 251410011
+// Kelas : SI2A
 
-class Produk {
-  final String id, nama; 
-  final double harga; 
-  final int stok;   
-  final String kategori;
+class Rekening {
+  String _namaPemilik = "";
+  double _saldo = 0;
 
-  Produk({
-    required this.id,
-    required this.nama,
-    required this.harga,
-    this.stok = 0,
-    this.kategori = 'Umum',
-  });
+  String get namaPemilik => _namaPemilik;
+  double get saldo => _saldo;
+
+  set namaPemilik(String value) {
+    _namaPemilik = value;
+  }
+
+  void tambahSaldo(double jumlah) {
+    if (jumlah > 0) {
+      _saldo += jumlah;
+    }
+  }
 }
 
 void main() {
-  Produk laptop = Produk(
-    id: "P001",
-    nama: "Laptop Ulrabook",
-    harga: 15000000,
-    stok: 15,
-    kategori: "Elektronik",
-  );
+  var rekening1 = Rekening();
 
-  Produk smartphone = Produk(
-    id: "P002",
-    nama: "Smartphone Gaming",
-    harga: 12000000,
-    stok: 25,
-  );
+  rekening1.namaPemilik = "Alicia";
+  rekening1.tambahSaldo(500000);
 
-  Produk kamera = Produk(
-    id: "P003",
-    nama: "Kamera Action",
-    harga: 20000000,
-  );
-
-  print(laptop.nama); 
-  print(smartphone.nama); 
-  print(kamera.nama); 
+  print("Pemilik: ${rekening1.namaPemilik}");
+  print("Saldo: ${rekening1.saldo}");
 }
 </pre>
 </div>
@@ -506,38 +464,33 @@ void main() {
 </button>
 </div>
 
-<!-- 10 - Kesimpulan (Tidak ada link DartPad) -->
-<div class="section">
-<h2>10- Kesimpulan</h2>
-<p>1. OOP (Object Oriented Programming)
-OOP adalah konsep pemrograman yang menggunakan objek dan kelas untuk mengatur kode agar lebih terstruktur, mudah dipahami, dan mudah digunakan kembali.</p>
-<p>2. Constructor
-Constructor adalah method khusus dalam class yang otomatis dijalankan saat objek dibuat, biasanya digunakan untuk menginisialisasi nilai awal atribut.</p>
-<p>3. Encapsulation
-Encapsulation adalah konsep menyembunyikan data dalam class dan hanya bisa diakses melalui method tertentu, sehingga data lebih aman dan terkontrol.</p>
-</div>
-
-<!-- 11 - Class Hewan (Tidak ada link DartPad) -->
-<div class="section">
-<h2>11 - QUIZ BONUS: HEWAN CLASS</h2>
+<!-- 08 - SISTEM LOGIN VERSI LAIN - Link 8 -->
+<div class="section" id="section8">
+<h2>08 - SISTEM LOGIN VERSI LAIN</h2>
 <p>Implementasi Kelas Hewan sesuai instruksi diskusi untuk pendefinisian atribut dan metode dasar.</p>
 <div class="code-box">
 <pre>
-// Nama  : Alicisa Putri Lestari
-// Nim   : 251410011
-// Kelas : Si2a
+// Nama  : Alicia Putri Lestari
+// NIM   : 251410011
+// Kelas : SI2A
 
-class Hewan {
-  String nama;
-  Hewan(this.nama);
-  void bersuara() {
-    print('$nama sedang bersuara...');
+class SistemLogin {
+  String _username = "user1";
+  String _password = "12345678";
+
+  bool cekLogin(String user, String pass) {
+    return user == _username && pass == _password;
   }
 }
+
 void main() {
-  var myPet = Hewan('Harimau');
-  print('Nama Hewan: ${myPet.nama}');
-  myPet.bersuara();
+  var login = SistemLogin();
+
+  if (login.cekLogin("user1", "12345678")) {
+    print("Akses diterima");
+  } else {
+    print("Akses ditolak");
+  }
 }
 </pre>
 </div>
