@@ -5,6 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OOP Dart</title>
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP Dart</title>
+
+<style>
+
+/* ============================= */
+/* RESPONSIVE DESIGN */
+/* ============================= */
+
+/* Tablet */
+@media (max-width: 900px){
+
+.container{
+flex-direction:column;
+}
+
+.content{
+width:100%;
+}
+
+.comment-box{
+position:relative;
+top:0;
+margin-top:20px;
+}
+
+header h1{
+font-size:28px;
+}
+
+}
+
+/* Mobile */
+@media (max-width:600px){
+
+header{
+padding:25px 10px;
+}
+
+header h1{
+font-size:22px;
+}
+
+}
+
+</style>
+
+</head>
+
 <style>
 *{
     margin:0;
@@ -333,7 +384,7 @@ void main() {
 }
 </pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('5f465239d8c2b7251c6a7514d6ff35a9')">
+<button class="dartpad-btn" onclick="openDartPad('cb65d21c486872cf550dd2f59b8bd01b')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -445,8 +496,8 @@ class Mahasiswa {
 }
 
 void main() {
-  var m1 = Mahasiswa(''Alicia, '251410010');
-  var m2 = Mahasiswa.dariMap({'nama': 'Putri Lestari', 'nim': '251410011'});
+  var m1 = Mahasiswa('Alicia', '251410010');
+  var m2 = Mahasiswa.dariMap({'nama': 'Putri Lestariuf21', 'nim': '251410011'});
   var m3 = Mahasiswa.tanpaNama();
 
   m1.info();
@@ -455,7 +506,7 @@ void main() {
 }
 <pre>
 </div>
-<button class="dartpad-btn" onclick="openDartPad('ed4033bb9748f738c89a1e55774a6f4b')">
+<button class="dartpad-btn" onclick="openDartPad('85bac1f40b122a78a714cda2021647d0')">
     <i>▶</i> Jalankan Kode di DartPad
 </button>
 </div>
@@ -810,16 +861,6 @@ void main() {
 </div>
 
 <script>
-    // SECURITY PROTOCOL: ANTI-VANDALISM & ANTI-VIEWSOURCE
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.onkeydown = function (e) {
-      if (e.keyCode == 123) return false; // F12
-      if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // Ctrl+Shift+I/J/C
-      if (e.ctrlKey && e.keyCode == 85) return false; // Ctrl+U
-      if (e.ctrlKey && e.keyCode == 83) return false; // Ctrl+S
-    };
-    document.onselectstart = function () { return false; };
-
     // Fungsi untuk membuka DartPad di modal
     function openDartPad(id) {
         const modal = document.getElementById('dartpadModal');
