@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP Dart - Multiple Inheritance & Class Modifiers</title>
+
+<style>
+/* ========== GLOBAL STYLE ========== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff4da6,#4da6ff);
+    color:white;
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:40px 20px;
+    background:rgba(0,0,0,0.75);
+}
+
+header h1{
+    font-size:35px;
+    background:linear-gradient(45deg,#ff99dd,#66ccff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:goyang 3s infinite alternate;
+}
+
+@keyframes goyang{
+    from{transform:translateX(-4px);}
+    to{transform:translateX(4px);}
+}
+
+header p{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* LAYOUT */
+.container{
+    display:flex;
+    width:95%;
+    margin:40px auto;
+    gap:30px;
+}
+
+/* CONTENT */
+.content{
+    flex:2;
+}
+
+.section{
+    background:rgba(0,0,0,0.8);
+    padding:25px;
+    margin-bottom:25px;
+    border-radius:15px;
+    box-shadow:0 0 20px #ff66cc;
+    transition:0.3s;
+}
+
+.section:hover{
+    transform:scale(1.02);
+    box-shadow:0 0 25px #66ccff;
+}
+
+.section h2{
+    margin-bottom:15px;
+    color:#66ccff;
+}
+
+.code-box{
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #66ccff;
+    color:#00ffcc;
+    font-family:monospace;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+/* Tombol DartPad */
+.dartpad-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff4da6, #4da6ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dartpad-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #66ccff;
+    background: linear-gradient(45deg, #4da6ff, #ff4da6);
+}
+
+/* ========== MODAL UNTUK GAMBAR ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gambar di dalam modal – agar pas dan tidak melebar */
+.modal-content {
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 0 25px #ff00ff, 0 0 40px #00ffff;
+    animation: zoom 0.3s ease;
+}
+
+@keyframes zoom {
+    from {transform: scale(0.7);}
+    to {transform: scale(1);}
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0,0,0,0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    z-index: 1001;
+}
+
+.close:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px){
+    .container{
+        flex-direction:column;
+    }
+    .content{
+        width:100%;
+    }
+    header h1{
+        font-size:28px;
+    }
+}
+
+@media (max-width:600px){
+    header{
+        padding:25px 10px;
+    }
+    header h1{
+        font-size:22px;
+    }
+    .modal-content {
+        max-width: 95%;
+        max-height: 85%;
+    }
+    .close {
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+        width: 40px;
+        height: 40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>MULTIPLE INHERITANCE & CLASS MODIFIERS</h1>
+<p>NAMA: ALICIA PUTRI LESTARI | NIM: 251410011 | KELAS: SI2A</p>
+</header>
+
+<div class="container">
+
+<div class="content">
+
+<div class="section" id="section1">
+<h2>MULTIPLE INHERITANCE DENGAN MIXIN, POLIMORFISME, DAN ABSTRAKSI</h2> 
+<p>Dalam pemrograman berorientasi objek, terdapat beberapa konsep penting seperti multiple inheritance dengan mixin, polimorfisme, dan abstraksi yang saling berkaitan.</p>
+ 
+<p>1. Mixin : Cara menambahkan kemampuan/fungsi ke dalam class tanpa perlu menurunkan class induk, supaya satu class bisa punya banyak sifat sekaligus.</p>
+<p>2. Polimorfisme : Kemampuan satu bentuk data untuk memiliki banyak perilaku berbeda, membuat kode jadi lebih fleksibel dan mudah diatur.</p>
+<p>3. Abstraksi : Teknik menyembunyikan detail rumit di balik layar dan hanya menampilkan fungsi utamanya saja, supaya program lebih simpel dan mudah dipakai.</p>
+ 
+<p>Ketiga konsep ini membantu dalam membuat program yang lebih terstruktur, mudah dikembangkan, dan mudah dipelihara.</p>
+</div>
+
+<div class="section" id="section3">
+<h2>STUDI KASUS BURUNG DAN BEBEK</h2>
+<p>Burung merupakan class induk, sedangkan Bebek class turunan. Bebek mewarisi sifat dari Burung meskipun mereka sejenis, perilaku Bebek bisa berbeda.</p>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : SI2A
+
+mixin CanFly {
+  void fly() {
+    print('Can fly!');
+  }
+}
+
+mixin CanSwim {
+  void swim() {
+    print('Can swim!');
+  }
+}
+
+class Bird with CanFly {}
+class Duck extends Bird with CanSwim {}
+
+void main() {
+  print("=== MIXIN BASIC ===");
+  Bird bird = Bird();
+  bird.fly();
+  Duck duck = Duck();
+  duck.fly();
+  duck.swim();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('35fb566c166fc073eb4ba25e86d93446')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section" id="section4">
+<h2>STUDI KASUS MIXIN DENGAN STATE</h2>
+<p>Teknik menambahkan fitur sekaligus menyimpan data ke dalam class tanpa perlu pewarisan langsung.
+Dengan ini, class bisa punya kemampuan tambahan beserta datanya sendiri secara mandiri.</p>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : SI2A
+
+mixin CanFly {
+  bool _isFlying = false;
+  void fly() {
+    if (!_isFlying) {
+      _isFlying = true;
+      print('Started flying!');
+    }
+  }
+  void land() {
+    if (_isFlying) {
+      _isFlying = false;
+      print('Landed!');
+    }
+  }
+}
+
+mixin CanSwim {
+  bool _isSwimming = false;
+  void swim() {
+    if (!_isSwimming) {
+      _isSwimming = true;
+      print('Started swimming!');
+    }
+  }
+  void stopSwim() {
+    if (_isSwimming) {
+      _isSwimming = false;
+      print('Stop swimming!');
+    }
+  }
+}
+
+class Bird with CanFly {}
+class Duck extends Bird with CanSwim {}
+
+void main() {
+  print("=== MIXIN STATE ===");
+  Bird bird = Bird();
+  bird.fly();
+  bird.land();
+  Duck duck = Duck();
+  duck.fly();
+  duck.swim();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('c10b7830d7612be3ced17b5de7d11219')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>PENGANTAR CLASS MODIFIERS</h2> 
+<p>Class modifiers adalah kata kunci khusus di Dart yang berfungsi sebagai pengatur dan pengendali. Ia menentukan aturan main sebuah class, mulai dari cara penggunaannya, batasan pewarisan, hingga pembatasan akses agar tidak disalahgunakan. Dengan fitur ini, pengembang punya kuasa penuh untuk mengatur perilaku class agar bekerja persis seperti yang direncanakan.</p>
+ 
+<p>Setiap jenis modifier punya tugas spesial, mulai dari membatasi siapa yang boleh menurunkan class, melindungi class agar tidak berubah, sampai memastikan implementasi dilakukan dengan benar. Semua ini bertujuan agar struktur program tetap aman, rapi, dan terorganisir.</p>
+ 
+<p>Kenapa Menggunakan Class Modifiers</p>
+<p>🌸 Mengontrol secara detail bagaimana class dipakai dan diturunkan</p>
+<p>🌸 Mencegah penggunaan class secara sembarangan atau salah cara</p>
+<p>🌸 Menjaga agar struktur dan logika program tetap konsisten dan aman</p>
+<p>🌸 Memudahkan perawatan serta pengembangan kode dalam jumlah besar</p>
+</div>
+
+<div class="section">
+<h2>SEALED CLASS</h2>
+<p>Sealed class adalah class yang membatasi pewarisan hanya dalam satu file, agar pembuatan subclass lebih terkontrol dan semua kondisi program bisa ditangani dengan pasti.</p>
+<div class="code-box">
+<pre>
+// Nama   : Alicia Putri Lestari
+// Nim    : 251410011
+// Kelas  : SI2A
+
+sealed class ApiResponse {}
+
+class Success extends ApiResponse {
+  final String message;
+  Success(this.message);
+}
+
+class Error extends ApiResponse {
+  final String errorMessage;
+  Error(this.errorMessage);
+}
+
+void handleResponse(ApiResponse response) {
+  switch (response) {
+    case Success(message: final msg):
+      print("✅ Sukses: $msg");
+    case Error(errorMessage: final err):
+      print("❌ Error: $err");
+  }
+}
+
+void main() {
+  print("=== CONTOH SEALED CLASS ===");
+  handleResponse(Success("Data berhasil dimuat!"));
+  handleResponse(Error("Koneksi internet bermasalah"));
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openImage('https://raw.githubusercontent.com/aliciaputrilestari/mata-kuliah-pemrograman-berorientasi./main/cia 6.png')">📷 LIHAT CAPTURE</button>
+</div>
+
+<div class="section">
+<h2>KEUNTUNGAN SEALED CLASS</h2>
+<p>🌸 Pembuatan subclass lebih terkontrol, hanya boleh di satu file</p>
+<p>🌸 Keamanan lebih terjamin karena tidak sembarangan bisa mewarisi</p>
+<p>🌸 Memudahkan penanganan kondisi dengan pattern matching</p>
+<p>🌸 Mencegah adanya kondisi atau kasus yang tidak tertangani</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Kelas : SI2A
+// Nim   : 251410011
+
+sealed class ApiResponse {}
+
+class Success extends ApiResponse {
+  final String message;
+  Success(this.message);
+}
+
+class Error extends ApiResponse {
+  final String errorMessage;
+  Error(this.errorMessage);
+}
+
+class Loading extends ApiResponse {}
+
+void handleResponse(ApiResponse response) {
+  switch (response) {
+    case Loading():
+      print("⏳ Sedang memuat data...");
+    case Success(message: final msg):
+      print("✅ Sukses: $msg");
+    case Error(errorMessage: final err):
+      print("❌ Error: $err");
+  }
+}
+
+void main() {
+  print("=== KEUNTUNGAN SEALED CLASS ===");
+  handleResponse(Loading());
+  handleResponse(Success("Data berhasil diambil!"));
+  handleResponse(Error("Gagal terhubung ke server"));
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openImage('https://raw.githubusercontent.com/aliciaputrilestari/mata-kuliah-pemrograman-berorientasi./main/cia 9.png')">📷 LIHAT CAPTURE</button>
+</div>
+
+<div class="section">
+<h2>BASE CLASS</h2>
+<p>Class yang boleh diturunkan (di-extends), tapi tidak boleh di-implements dan pembuatannya dibatasi hanya dalam satu library yang sama.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Kelas : SI2A
+// Nim   : 251410011
+
+base class Hewan {
+  void bersuara() {
+    print("Suara hewan");
+  }
+}
+
+base class Kucing extends Hewan {
+  @override
+  void bersuara() {
+    print("Meong! 🐱");
+  }
+}
+
+base class Anjing extends Hewan {
+  @override
+  void bersuara() {
+    print("Guk guk! 🐶");
+  }
+}
+
+void main() {
+  print("=== CONTOH BASE CLASS ===");
+  var kucing = Kucing();
+  kucing.bersuara();
+  var anjing = Anjing();
+  anjing.bersuara();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openImage('https://raw.githubusercontent.com/aliciaputrilestari/mata-kuliah-pemrograman-berorientasi./main/cia 8.png')">📷 LIHAT CAPTURE</button>
+</div>
+
+<div class="section">
+<h2>KAPAN MENGGUNAKAN BASE CLASS</h2>
+<p>Digunakan saat ingin membatasi pewarisan agar hanya boleh pakai extends dan tetap dalam kendali penuh. Ini menjaga struktur program agar tidak dipakai sembarangan, serta memastikan class anak mengikuti aturan yang sudah ditetapkan.</p>
+ 
+<p>Kapan dipakai:</p>
+<p>🌸 Saat ingin membatasi pewarisan hanya dengan extends</p>
+<p>🌸 Saat ingin menjaga struktur class tetap rapi dan konsisten</p>
+<p>🌸 Saat ingin mencegah penyalahgunaan kata kunci implements</p>
+<p>🌸 Saat butuh kontrol penuh terhadap cara class anak dibuat</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Kelas : SI2A
+// Nim   : 251410011
+
+base class Repository {
+  void create() {
+    print("✅ Data berhasil ditambahkan");
+  }
+  void read() {
+    print("📄 Menampilkan semua data");
+  }
+}
+
+base class UserRepository extends Repository {
+  @override
+  void read() {
+    print("👤 Menampilkan daftar user");
+  }
+}
+
+void main() {
+  print("=== CONTOH BASE CLASS ===");
+  var repo = UserRepository();
+  repo.create();
+  repo.read();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openImage('https://raw.githubusercontent.com/aliciaputrilestari/mata-kuliah-pemrograman-berorientasi./main/cia 7.png')">📷 LIHAT CAPTURE</button>
+</div>
+
+<div class="section">
+<h2>FINAL CLASS</h2>
+<p>Final class adalah class yang terkunci rapat, tidak boleh diturunkan atau diubah oleh class lain sama sekali.</p>
+ 
+<p>Kegunaan:</p>
+<p>🌸 Melindungi struktur agar tidak diwariskan</p>
+<p>🌸 Menjaga kode agar tetap asli dan tidak berubah</p>
+<p>🌸 Meningkatkan keamanan dan kestabilan program</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Kelas : SI2A
+// Nim   : 251410011
+
+final class Settings {
+  final String theme;
+  final int fontSize;
+  Settings({required this.theme, required this.fontSize});
+  void showSettings() {
+    print("Theme: $theme, Font Size: $fontSize");
+  }
+}
+
+void main() {
+  var setting = Settings(theme: "Dark", fontSize: 14);
+  setting.showSettings();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openImage('https://raw.githubusercontent.com/aliciaputrilestari/mata-kuliah-pemrograman-berorientasi./main/cia 3.png')">📷 LIHAT CAPTURE</button>
+</div>
+
+<div class="section">
+<h2>PERBANDINGAN CLASS MODIFIERS</h2> 
+<p>🌸 abstract : Tidak bisa dijadikan objek, hanya sebagai kerangka dasar.</p>
+<p>🌸 base : Boleh diturunkan, tapi hanya dalam satu library yang sama.</p>
+<p>🌸 interface : Berfungsi sebagai aturan yang wajib diikuti/diimplementasikan.</p>
+<p>🌸 final : Terkunci total, tidak boleh diturunkan atau diubah sama sekali.</p>
+<p>🌸 sealed : Turunan terbatas hanya boleh ada di dalam satu file yang sama.</p>
+</div>
+
+<div class="section">
+<h2>PRAKTIK 1 SEALED CLASS DENGAN PATTERN MATCHING</h2>
+<p>Memastikan kita tahu semua jenis turunan yang ada, sehingga setiap kondisi bisa dicek dan ditangani dengan tepat sesuai jenisnya.
+Ini membuat kode jadi lebih aman dan lengkap, karena tidak ada kasus yang terlewat.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Kelas : SI2A
+// Nim   : 251410011
+
+sealed class Status {}
+
+class Loading extends Status {}
+class Loaded extends Status {
+  final String data;
+  Loaded(this.data);
+}
+class Failed extends Status {
+  final String error;
+  Failed(this.error);
+}
+
+void handleStatus(Status status) {
+  switch (status) {
+    case Loading():
+      print('Loading...');
+    case Loaded(:final data):
+      print('Data: $data');
+    case Failed(:final error):
+      print('Error: $error');
+  }
+}
+
+void main() {
+  print("=== SEALED PATTERN ===");
+  handleStatus(Loading());
+  handleStatus(Loaded("Data berhasil"));
+  handleStatus(Failed("Terjadi kesalahan"));
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('71b10f81a927a3b35bc7eac6acd72cb9')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>SISTEM STATE MANAGEMENT</h2>
+<p>Cara mengatur keadaan aplikasi (seperti loading, success, error) agar teratur. Dengan sealed class, setiap kondisi bisa dibuat dengan sangat jelas.</p>
+ 
+<p>Fitur: Mengatur kondisi aplikasi, mengendalikan alur kerja program</p>
+ 
+<p>Kenapa Penggunaan: Struktur jadi lebih rapi dan jelas, mencegah error yang tidak tertangani</p>
+ 
+<p>Batasan: Bisa jadi rumit kalau jenis kondisinya terlalu banyak</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Kelas : SI2A
+// Nim   : 251410011
+
+sealed class AppState {}
+
+class LoadingState extends AppState {}
+class SuccessState extends AppState {
+  final List<String> items;
+  SuccessState(this.items);
+}
+class ErrorState extends AppState {
+  final String message;
+  ErrorState(this.message);
+}
+
+void updateUI(AppState state) {
+  switch (state) {
+    case LoadingState():
+      print('Loading...');
+    case SuccessState(:final items):
+      print('Success: $items');
+    case ErrorState(:final message):
+      print('Error: $message');
+  }
+}
+
+void main() {
+  print("=== APP STATE ===");
+  updateUI(LoadingState());
+  updateUI(SuccessState(["A", "B"]));
+  updateUI(ErrorState("Gagal"));
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('3e845e9bd2ebb27a45fa438a497eafd8')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>RINGKASAN & BEST PRACTICES</h2> 
+<p>RINGKASAN:</p>
+<p>🌸 Sealed = Mengatur hierarki & mendukung pattern matching</p>
+<p>🌸 Base = Sebagai fondasi yang hanya boleh diturunkan di dalam</p>
+<p>🌸 Final = Melindungi class agar tidak bisa diwariskan sama sekali</p>
+ 
+<p>BEST PRACTICES:</p>
+<p>🌸 Pakai Sealed untuk kondisi yang jumlahnya pasti</p>
+<p>🌸 Pakai Base untuk membuat kerangka utama program</p>
+<p>🌸 Pakai Final untuk menjaga kode agar tetap aman dan tidak berubah</p>
+</div>
+
+<div class="section">
+<h2>BONUS BASE CLASS REPOSITORY</h2>
+<p>Membuat class yang hanya boleh dijadikan induk pakai extends, dan dilarang keras dipakai pakai implements.</p>
+ 
+<p>Fitur Base Class pada Repository: Pewarisan wajib pakai extends, tidak bisa dijadikan kontrak di luar, bentuk fungsi tetap terjaga.</p>
+ 
+<p>Kenapa menggunakan base: Pola CRUD jadi standar, mencegah cara pakai yang salah, penggunaan lebih aman & teratur.</p>
+ 
+<p>Batasan: Tidak boleh pakai kata kunci implements</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Kelas : SI2A
+// Nim   : 251410011
+
+base class Repository<T> {
+  final List<T> _data = [];
+  void create(T item) {
+    _data.add(item);
+    print("Data ditambahkan: $item");
+  }
+  void read() {
+    print("Isi data:");
+    for (var item in _data) print("- $item");
+  }
+  void update(int index, T newItem) {
+    if (index >= 0 && index < _data.length) {
+      _data[index] = newItem;
+      print("Data diupdate di index $index");
+    }
+  }
+  void delete(int index) {
+    if (index >= 0 && index < _data.length) {
+      print("Data dihapus: ${_data[index]}");
+      _data.removeAt(index);
+    }
+  }
+}
+
+base class UserRepository extends Repository<String> {}
+
+void main() {
+  var repo = UserRepository();
+  repo.create("Alicia");
+  repo.create("Budi");
+  repo.create("Cici");
+  print("\n--- Setelah Ditambah ---");
+  repo.read();
+  repo.update(1, "Budi Update");
+  print("\n--- Setelah Diubah ---");
+  repo.read();
+  repo.delete(0);
+  print("\n--- Setelah Dihapus ---");
+  repo.read();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openImage('https://raw.githubusercontent.com/aliciaputrilestari/mata-kuliah-pemrograman-berorientasi./main/cia%204.png')">📷 LIHAT CAPTURE</button>
+</div>
+
+<div class="section">
+<h2>BONUS FINAL CLASS MATHUTILS</h2>
+<p>MathUtils dibuat menggunakan final class karena isinya hanya fungsi bantuan (utilities) yang sifatnya umum dan tidak perlu diwariskan ke class lain.</p>
+ 
+<p>Fitur Final Class pada MathUtils: Tidak bisa di-extend, tidak bisa di-implement, cocok untuk method static.</p>
+ 
+<p>Kenapa Menggunakan final? Mencegah class diwariskan, menjaga fungsi tetap sederhana, cepat, aman, menghindari perubahan perilaku.</p>
+ 
+<p>Batasan: Tidak bisa diwariskan sama sekali.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Kelas : SI2A
+// Nim   : 251410011
+
+final class MathUtils {
+  static int add(int a, int b) => a + b;
+  static int subtract(int a, int b) => a - b;
+  static int multiply(int a, int b) => a * b;
+  static double divide(int a, int b) => a / b;
+}
+
+void main() {
+  print("Hasil Penjumlahan: ${MathUtils.add(10, 5)}");
+  print("Hasil Pengurangan: ${MathUtils.subtract(10, 5)}");
+  print("Hasil Perkalian: ${MathUtils.multiply(10, 5)}");
+  print("Hasil Pembagian: ${MathUtils.divide(10, 5)}");
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openImage('https://raw.githubusercontent.com/aliciaputrilestari/mata-kuliah-pemrograman-berorientasi./main/cia%2010.png')">📷 LIHAT CAPTURE</button>
+</div>
+
+</div> <!-- penutup .content -->
+
+</div> <!-- penutup .container -->
+
+<!-- MODAL UNTUK GAMBAR -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeImage()">&times;</span>
+    <img class="modal-content" id="modalImg">
+</div>
+
+<!-- MODAL UNTUK DARTPAD -->
+<div id="dartpadModal" class="modal">
+    <span class="close" onclick="closeDartPad()">&times;</span>
+    <iframe id="dartpadFrame" 
+        style="width:90%; height:90%; border:none; border-radius:15px;">
+    </iframe>
+</div>
+
+<script>
+// Fungsi untuk membuka gambar modal
+function openImage(imgUrl) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    if (modal && modalImg) {
+        modal.style.display = "flex";
+        modalImg.src = imgUrl;
+    }
+}
+
+function closeImage() {
+    const modal = document.getElementById("imageModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Tutup modal jika klik di luar gambar
+window.onclick = function(event) {
+    const modal = document.getElementById("imageModal");
+    if (event.target === modal) {
+        closeImage();
+    }
+}
+
+// Placeholder untuk openDartPad (jika diperlukan)
+function openDartPad(id) {
+    const modal = document.getElementById("dartpadModal");
+    const frame = document.getElementById("dartpadFrame");
+
+    if (id && id.length > 0) {
+        frame.src = `https://dartpad.dev/embed-inline.html?id=${id}`;
+        modal.style.display = "flex";
+    }
+}
+
+function closeDartPad() {
+    const modal = document.getElementById("dartpadModal");
+    const frame = document.getElementById("dartpadFrame");
+
+    modal.style.display = "none";
+    frame.src = "";
+}
+</script>
+
+</body>
+</html>
