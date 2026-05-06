@@ -299,7 +299,7 @@ void main() {
   print(result);
 }
 </code></pre>
-    <button class="btn-run" onclick="openImage('sl3s.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/sl3s.png')">Lihat Capture</button>
     <p style="margin-top: 0.5rem; font-weight: bold;">Eror</p>
     <p>Program mengalami kesalahan karena tipe data tidak sesuai, misalnya memasukkan String ke variabel yang seharusnya bertipe int.</p>
     <pre><code>
@@ -320,7 +320,7 @@ void main() {
   print(result);
 }
 </code></pre>
-    <button class="btn-run" onclick="openImage('esl3.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/esl3.png')">Lihat Capture</button>
   </div>
 
   <!-- SOLUSI DENGAN GENERIC -->
@@ -349,7 +349,7 @@ void main() {
   print(textData.value);
 }
     </code></pre>
-    <button class="btn-run" onclick="openImage('sls4.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/sls4.png')">Lihat Capture</button>
     <p style="margin-top: 0.5rem; font-weight: bold;">Eror</p>
     <p>Program mengalami kesalahan karena tipe data tidak sesuai dengan yang ditentukan sejak awal, sehingga tidak aman (tidak type-safe) dan menyebabkan error.</p>
     <pre><code>
@@ -370,7 +370,7 @@ void main() {
   print(result);
 }
     </code></pre>
-    <button class="btn-run" onclick="openImage('esl4.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/esl4.png')">Lihat Capture</button>
   </div>
 
   <!-- SINTAKS DASAR GENERIC -->
@@ -558,7 +558,7 @@ void main() {
   print(b.getNilai()); // Output: 2.5
 }
 </code></pre>
-    <button class="btn-run" onclick="openImage('sl9s.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/sl9s.png')">Lihat Capture</button>
     <p style="margin-top: 0.5rem; font-weight: bold;">Eror</p>
     <p>Error karena String bukan turunan dari num.</p>
     <pre><code>
@@ -576,7 +576,7 @@ void main() {
   var c = DataAngka&lt;String&gt;("halo"); // ERROR
 }
 </code></pre>
-    <button class="btn-run" onclick="openImage('esl9.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/esl9.png')">Lihat Capture</button>
   </div>
 
   <!-- TYPE INFERENCE -->
@@ -641,7 +641,7 @@ void main() {
   tampilkan&lt;Set&lt;String&gt;&gt;({'A', 'B', 'C'});
 }
 </code></pre>
-    <button class="btn-run" onclick="openImage('sl11s.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/sl11s.png')">Lihat Capture</button>
     <p style="margin-top: 0.5rem; font-weight: bold;">Eror</p>
     <p>Karena int bukan turunan dari Iterable, sehingga melanggar batasan extends.</p>
     <pre><code>
@@ -659,7 +659,7 @@ void main() {
   tampilkan&lt;int&gt;(10); // ERROR
 }
 </code></pre>
-    <button class="btn-run" onclick="openImage('esl11.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/esl11.png')">Lihat Capture</button>
   </div>
 
   <!-- PEMBATASAN TIPE DENGAN CLASS ABSTRACT -->
@@ -712,7 +712,7 @@ void main() {
   catCage.makeSound(); // Output: Meow!
 }
 </code></pre>
-    <button class="btn-run" onclick="openImage('sl12s.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/sl12s.png')">Lihat Capture</button>
     <p style="margin-top: 0.5rem; font-weight: bold;">Eror</p>
     <p>Karena tipe data tidak sesuai dengan batas (extends).</p>
     <pre><code>
@@ -735,7 +735,7 @@ void main() {
   //  Error: String bukan turunan dari Animal
 }
 </code></pre>
-    <button class="btn-run" onclick="openImage('sl12s.png')">Lihat Capture</button>
+    <button class="btn-run" onclick="openImage('images/sl12s.png')">Lihat Capture</button>
   </div>
 
   <div class="card">
