@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP Dart - Multiple Inheritance & Class Modifiers</title>
+
+<style>
+/* ========== GLOBAL STYLE ========== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff4da6,#4da6ff);
+    color:white;
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:40px 20px;
+    background:rgba(0,0,0,0.75);
+}
+
+header h1{
+    font-size:35px;
+    background:linear-gradient(45deg,#ff99dd,#66ccff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:goyang 3s infinite alternate;
+}
+
+@keyframes goyang{
+    from{transform:translateX(-4px);}
+    to{transform:translateX(4px);}
+}
+
+header p{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* LAYOUT */
+.container{
+    display:flex;
+    width:95%;
+    margin:40px auto;
+    gap:30px;
+}
+
+/* CONTENT */
+.content{
+    flex:2;
+}
+
+.section{
+    background:rgba(0,0,0,0.8);
+    padding:25px;
+    margin-bottom:25px;
+    border-radius:15px;
+    box-shadow:0 0 20px #ff66cc;
+    transition:0.3s;
+}
+
+.section:hover{
+    transform:scale(1.02);
+    box-shadow:0 0 25px #66ccff;
+}
+
+.section h2{
+    margin-bottom:15px;
+    color:#66ccff;
+}
+
+.code-box{
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #66ccff;
+    color:#00ffcc;
+    font-family:monospace;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+/* Tombol DartPad */
+.dartpad-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff4da6, #4da6ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dartpad-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #66ccff;
+    background: linear-gradient(45deg, #4da6ff, #ff4da6);
+}
+
+/* ========== MODAL UNTUK GAMBAR ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gambar di dalam modal – agar pas dan tidak melebar */
+.modal-content {
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 0 25px #ff00ff, 0 0 40px #00ffff;
+    animation: zoom 0.3s ease;
+}
+
+@keyframes zoom {
+    from {transform: scale(0.7);}
+    to {transform: scale(1);}
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0,0,0,0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    z-index: 1001;
+}
+
+.close:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px){
+    .container{
+        flex-direction:column;
+    }
+    .content{
+        width:100%;
+    }
+    header h1{
+        font-size:28px;
+    }
+}
+
+@media (max-width:600px){
+    header{
+        padding:25px 10px;
+    }
+    header h1{
+        font-size:22px;
+    }
+    .modal-content {
+        max-width: 95%;
+        max-height: 85%;
+    }
+    .close {
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+        width: 40px;
+        height: 40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>BONUS 1</h1>
+<p>NAMA: ALICIA PUTRI LESTARI | NIM: 251410011 | KELAS: SI2A</p>
+</header>
+
+<div class="container">
+
+<div class="content">
+
+<div class="section" id="section3">
+<h2>Soal 2: Extension Method & Private Member</h2>
+<p> Extension method tidak bisa mengakses _value langsung karena private. Solusinya: gunakan method public getValue() sebagai jembatan.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri LESTARI
+// Nim   : 251410011
+// Kelas : SI2A
+
+class Counter {
+  int _value = 0; // private di Dart pakai underscore
+
+  void increment() {
+    _value++;
+  }
+
+  int getValue() {
+    return _value;
+  }
+}
+
+// Syntax extension di Dart
+extension CounterStats on Counter {
+  String getStats() {
+    return 'Current value: ${this.getValue()}';
+  }
+}
+
+void main() {
+  var c = Counter();
+  c.increment();
+  print(c.getValue());   // Output: 1
+  print(c.getStats());   // Output: Current value: 1
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('95afaa2308d42d6ae7407d3922b59a75')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section" id="section4">
+<h2>Soal 3: Prioritas Method Asli vs Extension (dan Nullable)</h2>
+<p> - Output program: *"Hello from class"* — method asli selalu menang atas extension method dengan nama sama </p>
+<P> - Jika obj bernilai null: extension method *bisa* dipanggil pada nullable receiver (Greeting?), sedangkan method asli tidak bisa (akan throw NullPointerException). Solusi: gunakan nullable receiver di extension seperti fun Greeting?.safeCall() </p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri LESTARI
+// Nim   : 251410011
+// Kelas : SI2A
+
+class Greeting {
+  String say() => 'Hello from class';
+}
+
+extension GreetingExt on Greeting {
+  String sayExt() => 'Hello from extension';
+}
+
+// Extension untuk nullable
+extension NullableGreeting on Greeting? {
+  String safeCall() {
+    return this?.say() ?? 'Object is null!';
+  }
+}
+
+void main() {
+  Greeting? obj = Greeting();
+  print(obj?.say());      // Output: Hello from class
+
+  Greeting? nullObj = null;
+  print(nullObj.safeCall()); // Output: Object is null!
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('eeb4530c62fe3634d287a799bc2ce697')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+
+</div> <!-- penutup .content -->
+
+</div> <!-- penutup .container -->
+
+<!-- MODAL UNTUK GAMBAR -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeImage()">&times;</span>
+    <img class="modal-content" id="modalImg">
+</div>
+
+<!-- MODAL UNTUK DARTPAD -->
+<div id="dartpadModal" class="modal">
+    <span class="close" onclick="closeDartPad()">&times;</span>
+    <iframe id="dartpadFrame" 
+        style="width:90%; height:90%; border:none; border-radius:15px;">
+    </iframe>
+</div>
+
+<script>
+// Fungsi untuk membuka gambar modal
+function openImage(imgUrl) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    if (modal && modalImg) {
+        modal.style.display = "flex";
+        modalImg.src = imgUrl;
+    }
+}
+
+function closeImage() {
+    const modal = document.getElementById("imageModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Tutup modal jika klik di luar gambar
+window.onclick = function(event) {
+    const modal = document.getElementById("imageModal");
+    if (event.target === modal) {
+        closeImage();
+    }
+}
+
+// Placeholder untuk openDartPad (jika diperlukan)
+function openDartPad(id) {
+    const modal = document.getElementById("dartpadModal");
+    const frame = document.getElementById("dartpadFrame");
+
+    if (id && id.length > 0) {
+        frame.src = `https://dartpad.dev/embed-inline.html?id=${id}`;
+        modal.style.display = "flex";
+    }
+}
+
+function closeDartPad() {
+    const modal = document.getElementById("dartpadModal");
+    const frame = document.getElementById("dartpadFrame");
+
+    modal.style.display = "none";
+    frame.src = "";
+}
+</script>
+
+</body>
+</html>
