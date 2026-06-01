@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP Dart - Multiple Inheritance & Class Modifiers</title>
+
+<style>
+/* ========== GLOBAL STYLE ========== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff4da6,#4da6ff);
+    color:white;
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:40px 20px;
+    background:rgba(0,0,0,0.75);
+}
+
+header h1{
+    font-size:35px;
+    background:linear-gradient(45deg,#ff99dd,#66ccff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:goyang 3s infinite alternate;
+}
+
+@keyframes goyang{
+    from{transform:translateX(-4px);}
+    to{transform:translateX(4px);}
+}
+
+header p{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* LAYOUT */
+.container{
+    display:flex;
+    width:95%;
+    margin:40px auto;
+    gap:30px;
+}
+
+/* CONTENT */
+.content{
+    flex:2;
+}
+
+.section{
+    background:rgba(0,0,0,0.8);
+    padding:25px;
+    margin-bottom:25px;
+    border-radius:15px;
+    box-shadow:0 0 20px #ff66cc;
+    transition:0.3s;
+}
+
+.section:hover{
+    transform:scale(1.02);
+    box-shadow:0 0 25px #66ccff;
+}
+
+.section h2{
+    margin-bottom:15px;
+    color:#66ccff;
+}
+
+.code-box{
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #66ccff;
+    color:#00ffcc;
+    font-family:monospace;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+/* Tombol DartPad */
+.dartpad-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff4da6, #4da6ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dartpad-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #66ccff;
+    background: linear-gradient(45deg, #4da6ff, #ff4da6);
+}
+
+/* ========== MODAL UNTUK GAMBAR ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gambar di dalam modal – agar pas dan tidak melebar */
+.modal-content {
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 0 25px #ff00ff, 0 0 40px #00ffff;
+    animation: zoom 0.3s ease;
+}
+
+@keyframes zoom {
+    from {transform: scale(0.7);}
+    to {transform: scale(1);}
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0,0,0,0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    z-index: 1001;
+}
+
+.close:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px){
+    .container{
+        flex-direction:column;
+    }
+    .content{
+        width:100%;
+    }
+    header h1{
+        font-size:28px;
+    }
+}
+
+@media (max-width:600px){
+    header{
+        padding:25px 10px;
+    }
+    header h1{
+        font-size:22px;
+    }
+    .modal-content {
+        max-width: 95%;
+        max-height: 85%;
+    }
+    .close {
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+        width: 40px;
+        height: 40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>TUGAS SESI 10: FACTORY CONSTRUCTORS</h1>
+<p>NAMA: ALICIA PUTRI LESTARI | NIM: 251410011 | KELAS: SI2A</p>
+</header>
+
+<div class="container">
+
+<div class="content">
+
+<div class="section" id="section3">
+<h2>LATIHAN 1: CONNECTION FACTORY</h2>
+<p>Membuat koneksi database itu *lambat dan berat. Daripada buat koneksi baru setiap kali dibutuhkan, kita simpan koneksi yang sudah ada di **pool*. 
+Kalau butuh koneksi, cek pool dulu — kalau ada yang tersedia langsung pakai, kalau belum baru buat baru. Ini menghemat waktu dan resource komputer.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Nim   : 251410011
+// Kelas : SI2A
+
+import 'dart:collection';
+
+// Latihan 1: Connection Factory dengan Pooling
+class DatabaseConnection {
+  final String connectionString;
+  bool _isUsed = false;
+
+  DatabaseConnection(this.connectionString);
+
+  void connect() => print('✅ Terhubung ke: $connectionString');
+  void disconnect() => print('❌ Terputus dari: $connectionString');
+
+  bool get isUsed => _isUsed;
+  set isUsed(bool value) => _isUsed = value;
+}
+
+class ConnectionFactory {
+  final List<DatabaseConnection> _pool = [];
+  final String _defaultConnStr;
+  final int _maxPoolSize;
+
+  ConnectionFactory(this._defaultConnStr, [this._maxPoolSize = 5]);
+
+  DatabaseConnection getConnection() {
+    // Cari koneksi yang tidak terpakai
+    for (var conn in _pool) {
+      if (!conn.isUsed) {
+        conn.isUsed = true;
+        return conn;
+      }
+    }
+
+    // Buat baru jika belum penuh
+    if (_pool.length < _maxPoolSize) {
+      final newConn = DatabaseConnection(_defaultConnStr);
+      newConn.isUsed = true;
+      _pool.add(newConn);
+      return newConn;
+    }
+
+    throw Exception('⚠️ Koneksi habis! Maksimal $_maxPoolSize koneksi.');
+  }
+
+  void releaseConnection(DatabaseConnection conn) {
+    conn.isUsed = false;
+    print('🔓 Koneksi dikembalikan ke pool');
+  }
+
+  int get activeConnections => _pool.where((c) => c.isUsed).length;
+}
+
+void main() {
+  print('=== UJI COBA CONNECTION FACTORY ===');
+  final factory = ConnectionFactory('mysql://localhost:3306/db_saya', 3);
+
+  try {
+    final conn1 = factory.getConnection();
+    conn1.connect();
+    print('Koneksi aktif: ${factory.activeConnections}');
+
+    final conn2 = factory.getConnection();
+    conn2.connect();
+    print('Koneksi aktif: ${factory.activeConnections}');
+
+    // Lepas koneksi pertama
+    factory.releaseConnection(conn1);
+    print('Koneksi aktif setelah lepas: ${factory.activeConnections}');
+
+    // Ambil lagi, akan pakai yang lama
+    final conn3 = factory.getConnection();
+    conn3.connect();
+    print('Koneksi aktif: ${factory.activeConnections}');
+
+  } catch (e) {
+    print(e);
+  }
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('21e4cd9ef23562f23339ea6b0433ce17')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>LATIHAN 2: NOTIFICATION FACTORY</h2>
+<p>Ketika aplikasi perlu kirim notifikasi, kita tidak selalu tahu harus pakai Email, SMS, atau Push. Factory ini bertugas memilihkan class yang tepat berdasarkan input platform. Kamu cukup tulis "email" atau "sms", 
+factory yang urus pemilihan class-nya. Kalau mau tambah platform baru, tinggal daftar di _platforms tanpa ubah logika lain.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Nim   : 251410011
+// Kelas : SI2A
+
+// Latihan 2: Notification Factory (Versi DartPad Fix)
+abstract class Notification {
+  void send(String pesan);
+}
+
+class AndroidNotification extends Notification {
+  @override
+  void send(String pesan) => print('📱 [Android] Notifikasi: $pesan');
+}
+
+class IOSNotification extends Notification {
+  @override
+  void send(String pesan) => print('🍎 [iOS] Notifikasi: $pesan');
+}
+
+class WebNotification extends Notification {
+  @override
+  void send(String pesan) => print('🌐 [Web] Notifikasi: $pesan');
+}
+
+class NotificationFactory {
+  // Ubah: Kita gunakan parameter input untuk memilih, karena Platform tidak bisa dipakai di DartPad
+  static Notification createNotification(String platform) {
+    print('🔍 Platform dipilih: $platform');
+
+    switch (platform.toLowerCase()) {
+      case 'android':
+        return AndroidNotification();
+      case 'ios':
+        return IOSNotification();
+      case 'web':
+      default:
+        return WebNotification();
+    }
+  }
+}
+
+void main() {
+  print('=== UJI COBA NOTIFICATION FACTORY ===');
+
+  // Coba semua jenis platform
+  final notif1 = NotificationFactory.createNotification('android');
+  notif1.send('Halo Pengguna Android!');
+
+  final notif2 = NotificationFactory.createNotification('ios');
+  notif2.send('Halo Pengguna iPhone!');
+
+  final notif3 = NotificationFactory.createNotification('web');
+  notif3.send('Halo Pengguna Website!');
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('12ebc43e5e11e8aae89abefec5e676ed')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>LATIHAN 3: SHAPE FACTORY</h2>
+<p>Kalau program perlu membuat banyak shape dengan tipe dan warna yang sama, tidak efisien kalau dibuat ulang terus. Factory ini menyimpan shape yang sudah dibuat di
+cache. Saat ada permintaan shape yang sama, langsung ambil dari cache. Hasilnya objek yang dikembalikan benar-benar objek yang sama di memori (s1 is s3 → True).</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Nim   : 251410011
+// Kelas : SI2A
+
+import 'dart:collection';
+
+// Latihan 3: Shape Factory dengan Cache
+abstract class Shape {
+  void draw();
+}
+
+class Circle extends Shape {
+  final double radius;
+  Circle(this.radius);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is Circle && radius == other.radius;
+
+  @override
+  int get hashCode => radius.hashCode;
+
+  @override
+  void draw() => print('🔵 Lingkaran | Jari-jari: $radius');
+}
+
+class Rectangle extends Shape {
+  final double lebar, tinggi;
+  Rectangle(this.lebar, this.tinggi);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Rectangle && lebar == other.lebar && tinggi == other.tinggi;
+
+  @override
+  int get hashCode => Object.hash(lebar, tinggi);
+
+  @override
+  void draw() => print('🟦 Persegi Panjang | ${lebar} x $tinggi');
+}
+
+class ShapeFactory {
+  static final HashMap<String, Shape> _cache = HashMap();
+
+  static Shape getShape(String tipe, {double? radius, double? lebar, double? tinggi}) {
+    String key;
+    Shape? shape;
+
+    if (tipe == 'lingkaran' && radius != null) {
+      key = 'lingkaran-$radius';
+      shape = _cache[key];
+      if (shape == null) {
+        print('✨ Membuat objek baru: $key');
+        shape = Circle(radius);
+        _cache[key] = shape;
+      } else {
+        print('📤 Ambil dari cache: $key');
+      }
+    } else if (tipe == 'persegi' && lebar != null && tinggi != null) {
+      key = 'persegi-$lebar-$tinggi';
+      shape = _cache[key];
+      if (shape == null) {
+        print('✨ Membuat objek baru: $key');
+        shape = Rectangle(lebar, tinggi);
+        _cache[key] = shape;
+      } else {
+        print('📤 Ambil dari cache: $key');
+      }
+    } else {
+      throw Exception('⚠️ Parameter tidak lengkap atau tipe tidak dikenal!');
+    }
+    return shape;
+  }
+
+  static int get jumlahDiCache => _cache.length;
+}
+
+void main() {
+  print('=== UJI COBA SHAPE FACTORY + CACHE ===');
+  try {
+    // Buat lingkaran pertama
+    final l1 = ShapeFactory.getShape('lingkaran', radius: 10);
+    l1.draw();
+
+    // Sama persis, ambil dari cache
+    final l2 = ShapeFactory.getShape('lingkaran', radius: 10);
+    l2.draw();
+
+    // Ukuran beda, buat baru
+    final l3 = ShapeFactory.getShape('lingkaran', radius: 20);
+    l3.draw();
+
+    final p1 = ShapeFactory.getShape('persegi', lebar: 5, tinggi: 8);
+    p1.draw();
+
+    print('\n📦 Total objek tersimpan di cache: ${ShapeFactory.jumlahDiCache}');
+  } catch (e) {
+    print(e);
+  }
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('f71b94ee69b81ef2f785cce7e4cd8946')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>CHALLENGE: ANIMAL FACTORY</h2>
+<p>Ini adalah factory paling lengkap yang menggabungkan semua konsep sebelumnya:</p>
+<p>- Factory method → satu method create() untuk semua jenis hewan</p>
+<p>- Subclass selection → input "dog" otomatis buat objek Dog, bukan Cat atau Bird</p>
+<p>- Cache → hewan dengan nama dan species sama tidak dibuat dua kali</p>
+<p>- Validation → sebelum dibuat, input dicek dulu (nama tidak boleh kosong, species harus valid)</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Nim   : 251410011
+// Kelas : SI2A
+
+import 'dart:collection';
+
+// Challenge: Animal Factory
+abstract class Animal {
+  final String nama;
+  final int umur;
+  Animal(this.nama, this.umur);
+  void bersuara();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Animal && nama == other.nama && umur == other.umur;
+
+  @override
+  int get hashCode => Object.hash(nama, umur);
+}
+
+class Kucing extends Animal {
+  Kucing(String nama, int umur) : super(nama, umur);
+  @override
+  void bersuara() => print('🐈 $nama: Meong meong!');
+}
+
+class Anjing extends Animal {
+  Anjing(String nama, int umur) : super(nama, umur);
+  @override
+  void bersuara() => print('🐕 $nama: Guk guk!');
+}
+
+class Burung extends Animal {
+  Burung(String nama, int umur) : super(nama, umur);
+  @override
+  void bersuara() => print('🐦 $nama: Ciuwit ciuwit!');
+}
+
+class AnimalFactory {
+  static final HashMap<String, Animal> _cache = HashMap();
+
+  static Animal createAnimal(String jenis, String nama, int umur) {
+    // 1. Validasi
+    if (nama.trim().isEmpty) throw Exception('⚠️ Nama tidak boleh kosong!');
+    if (umur <= 0 || umur > 100) throw Exception('⚠️ Umur harus 1 - 100 tahun!');
+
+    // Kunci cache
+    final key = '${jenis.toLowerCase()}-$nama-$umur';
+
+    // 2. Cek Cache
+    if (_cache.containsKey(key)) {
+      print('📤 Ambil dari cache: $key');
+      return _cache[key]!;
+    }
+
+    // 3. Pilih Subclass
+    Animal hewan;
+    switch (jenis.toLowerCase()) {
+      case 'kucing':
+        hewan = Kucing(nama, umur);
+        break;
+      case 'anjing':
+        hewan = Anjing(nama, umur);
+        break;
+      case 'burung':
+        hewan = Burung(nama, umur);
+        break;
+      default:
+        throw Exception('⚠️ Jenis "$jenis" tidak tersedia! (kucing/anjing/burung)');
+    }
+
+    // 4. Simpan ke Cache
+    _cache[key] = hewan;
+    print('✨ Objek baru dibuat: $key');
+    return hewan;
+  }
+
+  static int get totalCache => _cache.length;
+}
+
+void main() {
+  print('=== UJI COBA ANIMAL FACTORY ===');
+  try {
+    final a1 = AnimalFactory.createAnimal('kucing', 'Mochi', 3);
+    a1.bersuara();
+
+    final a2 = AnimalFactory.createAnimal('kucing', 'Mochi', 3); // Sama, ambil cache
+    a2.bersuara();
+
+    final a3 = AnimalFactory.createAnimal('anjing', 'Bobby', 5);
+    a3.bersuara();
+
+    final a4 = AnimalFactory.createAnimal('burung', 'Kutilang', 1);
+    a4.bersuara();
+
+    print('\n📦 Total hewan unik tersimpan: ${AnimalFactory.totalCache}');
+
+    // Contoh error validasi (buka komentar untuk coba)
+    // AnimalFactory.createAnimal('sapi', 'Sapi Kecil', 2); // Jenis salah
+    // AnimalFactory.createAnimal('kucing', '', 2); // Nama kosong
+    // AnimalFactory.createAnimal('anjing', 'Blacky', -5); // Umur salah
+
+  } catch (e) {
+    print(e);
+  }
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('f6d4ef1faf65ea31992f006160e03fce')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+
+</div> <!-- penutup .content -->
+
+</div> <!-- penutup .container -->
+
+<!-- MODAL UNTUK GAMBAR -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeImage()">&times;</span>
+    <img class="modal-content" id="modalImg">
+</div>
+
+<!-- MODAL UNTUK DARTPAD -->
+<div id="dartpadModal" class="modal">
+    <span class="close" onclick="closeDartPad()">&times;</span>
+    <iframe id="dartpadFrame" 
+        style="width:90%; height:90%; border:none; border-radius:15px;">
+    </iframe>
+</div>
+
+<script>
+// Fungsi untuk membuka gambar modal
+function openImage(imgUrl) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    if (modal && modalImg) {
+        modal.style.display = "flex";
+        modalImg.src = imgUrl;
+    }
+}
+
+function closeImage() {
+    const modal = document.getElementById("imageModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Tutup modal jika klik di luar gambar
+window.onclick = function(event) {
+    const modal = document.getElementById("imageModal");
+    if (event.target === modal) {
+        closeImage();
+    }
+}
+
+// Placeholder untuk openDartPad (jika diperlukan)
+function openDartPad(id) {
+    const modal = document.getElementById("dartpadModal");
+    const frame = document.getElementById("dartpadFrame");
+
+    if (id && id.length > 0) {
+        frame.src = `https://dartpad.dev/embed-inline.html?id=${id}`;
+        modal.style.display = "flex";
+    }
+}
+
+function closeDartPad() {
+    const modal = document.getElementById("dartpadModal");
+    const frame = document.getElementById("dartpadFrame");
+
+    modal.style.display = "none";
+    frame.src = "";
+}
+</script>
+
+</body>
+</html>
