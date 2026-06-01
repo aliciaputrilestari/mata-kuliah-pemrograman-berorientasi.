@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP Dart - Multiple Inheritance & Class Modifiers</title>
+
+<style>
+/* ========== GLOBAL STYLE ========== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff4da6,#4da6ff);
+    color:white;
+}
+
+/* HEADER */
+header{
+    text-align:center;
+    padding:40px 20px;
+    background:rgba(0,0,0,0.75);
+}
+
+header h1{
+    font-size:35px;
+    background:linear-gradient(45deg,#ff99dd,#66ccff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:goyang 3s infinite alternate;
+}
+
+@keyframes goyang{
+    from{transform:translateX(-4px);}
+    to{transform:translateX(4px);}
+}
+
+header p{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* LAYOUT */
+.container{
+    display:flex;
+    width:95%;
+    margin:40px auto;
+    gap:30px;
+}
+
+/* CONTENT */
+.content{
+    flex:2;
+}
+
+.section{
+    background:rgba(0,0,0,0.8);
+    padding:25px;
+    margin-bottom:25px;
+    border-radius:15px;
+    box-shadow:0 0 20px #ff66cc;
+    transition:0.3s;
+}
+
+.section:hover{
+    transform:scale(1.02);
+    box-shadow:0 0 25px #66ccff;
+}
+
+.section h2{
+    margin-bottom:15px;
+    color:#66ccff;
+}
+
+.code-box{
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #66ccff;
+    color:#00ffcc;
+    font-family:monospace;
+    overflow-x:auto;
+    margin-top:10px;
+}
+
+/* Tombol DartPad */
+.dartpad-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff4da6, #4da6ff);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dartpad-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #66ccff;
+    background: linear-gradient(45deg, #4da6ff, #ff4da6);
+}
+
+/* ========== MODAL UNTUK GAMBAR ========== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gambar di dalam modal – agar pas dan tidak melebar */
+.modal-content {
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 0 25px #ff00ff, 0 0 40px #00ffff;
+    animation: zoom 0.3s ease;
+}
+
+@keyframes zoom {
+    from {transform: scale(0.7);}
+    to {transform: scale(1);}
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0,0,0,0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+    z-index: 1001;
+}
+
+.close:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px){
+    .container{
+        flex-direction:column;
+    }
+    .content{
+        width:100%;
+    }
+    header h1{
+        font-size:28px;
+    }
+}
+
+@media (max-width:600px){
+    header{
+        padding:25px 10px;
+    }
+    header h1{
+        font-size:22px;
+    }
+    .modal-content {
+        max-width: 95%;
+        max-height: 85%;
+    }
+    .close {
+        top: 10px;
+        right: 20px;
+        font-size: 30px;
+        width: 40px;
+        height: 40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>TUGAS SESI 11: Redirecting Constructors</h1>
+<p>NAMA: ALICIA PUTRI LESTARI | NIM: 251410011 | KELAS: SI2A</p>
+</header>
+
+<div class="container">
+
+<div class="content">
+
+<div class="section" id="section3">
+<h2>MAIN CONSTRUCTOR DENGAN RADIUS</h2>
+<p>Main Constructor adalah constructor utama yang digunakan untuk membuat objek dengan menerima nilai radius (jari-jari) secara langsung.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Nim   : 251410011
+// Kelas : SI2A
+
+class Circle {
+  // Konstruktor Utama: Langsung pakai Radius
+  final double radius;
+  static const double pi = 3.14159;
+
+  Circle(this.radius);
+
+  void info() {
+    print('=== DIBUAT DARI RADIUS ===');
+    print('Jari-jari : ${radius.toStringAsFixed(2)}');
+    print('Diameter  : ${(2 * radius).toStringAsFixed(2)}');
+    print('Keliling : ${(2 * pi * radius).toStringAsFixed(2)}');
+    print('Luas     : ${(pi * radius * radius).toStringAsFixed(2)}');
+    print('---------------------------');
+  }
+}
+
+void main() {
+  // Membuat lingkaran langsung pakai nilai radius
+  var lingkaran = Circle(10);
+  lingkaran.info();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('2047b4fa036f0b9c151c3c5cfe1aaf27')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>REDIRECTING DARI DIAMETER</h2>
+<p>Redirecting Constructor dari diameter digunakan ketika yang diketahui adalah diameter, tetapi class membutuhkan radius.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Nim   : 251410011
+// Kelas : SI2A
+
+class Circle {
+  final double radius;
+  static const double pi = 3.14159;
+
+  // Konstruktor Utama
+  Circle(this.radius);
+
+  // Konstruktor Redirecting: Dari Diameter -> ke Radius
+  Circle.fromDiameter(double diameter) : this(diameter / 2);
+
+  void info() {
+    print('=== DIBUAT DARI DIAMETER ===');
+    print('Jari-jari : ${radius.toStringAsFixed(2)}');
+    print('Diameter  : ${(2 * radius).toStringAsFixed(2)}');
+    print('Keliling : ${(2 * pi * radius).toStringAsFixed(2)}');
+    print('Luas     : ${(pi * radius * radius).toStringAsFixed(2)}');
+    print('---------------------------');
+  }
+}
+
+void main() {
+  // Membuat lingkaran pakai nilai diameter
+  var lingkaran = Circle.fromDiameter(20);
+  lingkaran.info();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('63b2e7e1ff08a82e4bf9a8deb3007cb9')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>REDIRECTING DARI KELILING</h2>
+<p>Redirecting Constructor dari keliling digunakan jika nilai yang diketahui adalah keliling lingkaran.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Nim   : 251410011
+// Kelas : SI2A
+
+class Circle {
+  final double radius;
+  static const double pi = 3.14159;
+
+  // Konstruktor utama
+  Circle(this.radius);
+
+  // Redirecting dari keliling
+  Circle.fromKeliling(double keliling) : this(keliling / (2 * pi));
+
+  void info() {
+    print('Jari-jari: ${radius.toStringAsFixed(2)}');
+    print('Keliling: ${(2 * pi * radius).toStringAsFixed(2)}');
+    print('------------------------');
+  }
+}
+
+void main() {
+  print('=== DARI KELILING ===');
+  var c = Circle.fromKeliling(31.4159);
+  c.info();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('bfac99efeef835259054a59605ac832c')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>REDIRECTING DARI LUAS</h2>
+<P>Redirecting Constructor dari luas digunakan ketika yang diketahui adalah luas lingkaran.</p>
+<div class="code-box">
+<pre>
+// Nama  : Alicia Putri Lestari
+// Nim   : 251410011
+// Kelas : SI2A
+
+class Circle {
+  final double radius;
+  static const double pi = 3.14159;
+
+  // Konstruktor utama
+  Circle(this.radius);
+
+  // Redirecting dari luas
+  Circle.fromLuas(double luas) : this((luas / pi).sqrt());
+
+  void info() {
+    print('Jari-jari: ${radius.toStringAsFixed(2)}');
+    print('Luas: ${(pi * radius * radius).toStringAsFixed(2)}');
+    print('------------------------');
+  }
+}
+
+void main() {
+  print('=== DARI LUAS ===');
+  var c = Circle.fromLuas(78.53975);
+  c.info();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('4c4cbe3b7c2e58f0bfa092e4838e7ffd')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>IMPLEMENTASI LENGKAP REDIRECTING CONSTRUCTOR PADA CLASS CIRCLE</h2>
+<P></p>
+<div class="code-box">
+<pre>
+// Nama : Alicia Putri Lestari
+// Nim  : 251410011
+// Kelas: SI2A
+
+import 'dart:math';
+
+class Circle {
+  final double radius;
+  static const double pi = 3.14159;
+
+  // Konstruktor Utama
+  Circle(this.radius);
+
+  // Redirecting Constructor (Sesuai Materi)
+  Circle.fromDiameter(double diameter) : this(diameter / 2);
+  Circle.fromKeliling(double keliling) : this(keliling / (2 * pi));
+  
+  // ✅ PERBAIKAN: Ubah dari (nilai).sqrt() jadi sqrt(nilai)
+  Circle.fromLuas(double luas) : this( sqrt(luas / pi) );
+
+  void info() {
+    print('Jari-jari : ${radius.toStringAsFixed(2)}');
+    print('Diameter  : ${(2 * radius).toStringAsFixed(2)}');
+    print('Keliling  : ${(2 * pi * radius).toStringAsFixed(2)}');
+    print('Luas      : ${(pi * radius * radius).toStringAsFixed(2)}');
+    print('----------------------------------------');
+  }
+}
+
+void main() {
+  print('=== UJI COBA SEMUA KONSTRUKTOR ===');
+  
+  print('> Dibuat dari Radius (10):');
+  Circle(10).info();
+
+  print('> Dibuat dari Diameter (20):');
+  Circle.fromDiameter(20).info();
+
+  print('> Dibuat dari Keliling (31.4159):');
+  Circle.fromKeliling(31.4159).info();
+
+  print('> Dibuat dari Luas (78.53975):');
+  Circle.fromLuas(78.53975).info();
+}
+</pre>
+</div>
+<button class="dartpad-btn" onclick="openDartPad('f4830f5b1db8cee9900ab46d7ab555d0')">
+    ▶ Jalankan Kode di DartPad
+</button>
+</div>
+
+<div class="section">
+<h2>KESIMPULAN</h2>
+<P>- Redirecting Constructor berfungsi memanggil konstruktor lain dalam kelas yang sama lewat sintaks  : this(...) .</P>
+<p>- Mencegah penulisan kode berulang saat menyiapkan data awal objek.</p>
+<p>- Tanpa isi badan  { } , tugasnya hanya meneruskan nilai ke konstruktor utama.</p>
+<p>- Memudahkan pembuatan objek dengan berbagai cara atau sumber nilai masukan.</p>
+<p>- Kode jadi lebih pendek, rapi, terstruktur, dan mudah diperbaiki/dikembangkan.</p>
+<P>- Menerapkan prinsip DRY, mengurangi penyalinan kode agar lebih efisien.</p>
+</div>
+
+
+</div> <!-- penutup .content -->
+
+</div> <!-- penutup .container -->
+
+<!-- MODAL UNTUK GAMBAR -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeImage()">&times;</span>
+    <img class="modal-content" id="modalImg">
+</div>
+
+<!-- MODAL UNTUK DARTPAD -->
+<div id="dartpadModal" class="modal">
+    <span class="close" onclick="closeDartPad()">&times;</span>
+    <iframe id="dartpadFrame" 
+        style="width:90%; height:90%; border:none; border-radius:15px;">
+    </iframe>
+</div>
+
+<script>
+// Fungsi untuk membuka gambar modal
+function openImage(imgUrl) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    if (modal && modalImg) {
+        modal.style.display = "flex";
+        modalImg.src = imgUrl;
+    }
+}
+
+function closeImage() {
+    const modal = document.getElementById("imageModal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Tutup modal jika klik di luar gambar
+window.onclick = function(event) {
+    const modal = document.getElementById("imageModal");
+    if (event.target === modal) {
+        closeImage();
+    }
+}
+
+// Placeholder untuk openDartPad (jika diperlukan)
+function openDartPad(id) {
+    const modal = document.getElementById("dartpadModal");
+    const frame = document.getElementById("dartpadFrame");
+
+    if (id && id.length > 0) {
+        frame.src = `https://dartpad.dev/embed-inline.html?id=${id}`;
+        modal.style.display = "flex";
+    }
+}
+
+function closeDartPad() {
+    const modal = document.getElementById("dartpadModal");
+    const frame = document.getElementById("dartpadFrame");
+
+    modal.style.display = "none";
+    frame.src = "";
+}
+</script>
+
+</body>
+</html>
